@@ -28,7 +28,7 @@ function selectErrorCode(error) {
 
 export default class Errors {
   static handle(error) {
-    if (process.env.NODE_ENV !== 'test') {
+    if (process.env.REACT_APP_NODE_ENV !== 'test') {
       console.error(selectErrorMessage(error));
       console.error(error);
     }

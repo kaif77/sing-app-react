@@ -1,7 +1,13 @@
-const hostApi = process.env.NODE_ENV === "development" ? "http://localhost" : "https://sing-generator-node.herokuapp.com";
-const portApi = process.env.NODE_ENV === "development" ? 8080 : "";
+const hostApi =
+  process.env.REACT_APP_NODE_ENV === "production"
+    ? "http://localhost"
+    : "https://sing-generator-node.herokuapp.com";
+const portApi = process.env.REACT_APP_NODE_ENV === "production" ? 8080 : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/api`;
-const redirectUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000/sing-app-react" : "https://demo.flatlogic.com/sing-app-react";
+const redirectUrl =
+  process.env.REACT_APP_NODE_ENV === "production"
+    ? "http://localhost:3000/sing-app-react"
+    : "https://demo.flatlogic.com/sing-app-react";
 
 export default {
   redirectUrl,
@@ -11,24 +17,24 @@ export default {
   remote: "https://sing-generator-node.herokuapp.com",
   isBackend: process.env.REACT_APP_BACKEND,
   auth: {
-    email: 'admin@flatlogic.com',
-    password: 'password'
+    email: "admin@gmail.com",
+    password: "123456",
   },
   app: {
     sidebarColors: {
-      first: '#3D3D3D',
-      second: '#4B505F',
-      third: '#483CB6',
-      fourth: '#EFF2F5',
-      fifth: '#20AE8C'
+      first: "#3D3D3D",
+      second: "#4B505F",
+      third: "#483CB6",
+      fourth: "#EFF2F5",
+      fifth: "#20AE8C",
     },
     navbarColors: {
-      first: '#ffffff',
-      second: '#E2E7EC',
-      third: '#C9D1FB',
-      fourth: '#C1C3CF',
-      fifth: '#0C2236',
-      sixth: '#6FB0F9'
+      first: "#ffffff",
+      second: "#E2E7EC",
+      third: "#C9D1FB",
+      fourth: "#C1C3CF",
+      fifth: "#0C2236",
+      sixth: "#6FB0F9",
     },
     colors: {
       dark: "#002B49",
@@ -42,7 +48,7 @@ export default {
       salad: "#21AE8C",
       seaWave: "#483CB6",
       grad: "#4B505F",
-      blueSky: "#EFF2F5"
+      blueSky: "#EFF2F5",
     },
     themeColors: {
       primary: "#6FB0F9",
@@ -52,7 +58,7 @@ export default {
       warning: "#EBB834",
       danger: "#FF5574",
       inverse: "#30324C",
-      default: "#9083F7"
+      default: "#9083F7",
     },
-  }
+  },
 };
