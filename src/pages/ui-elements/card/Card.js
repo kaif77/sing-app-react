@@ -2,8 +2,6 @@ import React from 'react';
 import {
   Row,
   Col,
-  Breadcrumb,
-  BreadcrumbItem,
   Button,
   Badge,
   Card,
@@ -21,10 +19,6 @@ import reactnativeImg from '../../../images/cards/rns.png';
 
 const Cards = () => (
   <div>
-    <Breadcrumb>
-      <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-      <BreadcrumbItem active>UI Card</BreadcrumbItem>
-    </Breadcrumb>
     <h1 className="page-title">Cards - <span className="fw-semi-bold">Examples</span></h1>
     <p>
       A card is a flexible and extensible content container. It includes options for headers and footers,
@@ -74,10 +68,10 @@ const Cards = () => (
             <hr />
             <div className="d-flex justify-content-between mb-lg">
               <div className="text-warning">
-                <i className="fa fa-star mr-xs" />
-                <i className="fa fa-star mr-xs" />
-                <i className="fa fa-star mr-xs" />
-                <i className="fa fa-star mr-xs" />
+                <i className="fa fa-star me-2" />
+                <i className="fa fa-star me-2" />
+                <i className="fa fa-star me-2" />
+                <i className="fa fa-star me-2" />
                 <i className="fa fa-star" />
               </div>
               <span className="text-muted"><small>342 REVIEWS</small></span>
@@ -103,7 +97,7 @@ const Cards = () => (
         </Card>
       </Col>
       <Col xs={12} sm={6} md={4}>
-        <Card className="border-0">
+        <Card className="border-0 mb-4">
           <CardImg top width="100%" src={reactnativeImg} alt="Card image cap" />
           <CardBody>
             <small>Technology</small><br />

@@ -1,39 +1,49 @@
 import {
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
-} from '../actions/user';
+  LOGIN_REQUEST, LOGIN_SUCCESS, AUTH_FAILURE, LOGOUT_SUCCESS, RESET_REQUEST, RESET_SUCCESS,
+  PASSWORD_RESET_EMAIL_REQUEST, PASSWORD_RESET_EMAIL_SUCCESS, AUTH_INIT_SUCCESS, AUTH_INIT_ERROR,
+  REGISTER_REQUEST, REGISTER_SUCCESS
+} from '../actions/auth';
 
-const idToken = localStorage.getItem('id_token');
-// The auth reducer. The starting state sets authentication
-// based on a token being in local storage. In a real app,
-// we would also want a util to check if the token is expired.
 export default function auth(state = {
   isFetching: false,
-  isAuthenticated: !!idToken,
-}, action) {
-  switch (action.type) {
-    case LOGIN_REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true,
-        isAuthenticated: false,
-        user: action.creds,
-      });
-    case LOGIN_SUCCESS:
-      return Object.assign({}, state, {
-        isFetching: false,
-        isAuthenticated: true,
-        errorMessage: '',
-      });
-    case LOGIN_FAILURE:
-      return Object.assign({}, state, {
-        isFetching: false,
-        isAuthenticated: false,
-        errorMessage: action.message,
-      });
-    case LOGOUT_SUCCESS:
-      return Object.assign({}, state, {
-        isAuthenticated: false,
-      });
-    default:
-      return state;
+  errorMessage: '',
+  currentUser: null,
+  loadingInit: true,
+}, {type, payload}) {
+  switch (type) {
+      case LOGIN_REQUEST:
+      case RESET_REQUEST:
+      case PASSWORD_RESET_EMAIL_REQUEST:
+      case REGISTER_REQUEST:
+          return Object.assign({}, state, {
+              isFetching: true,
+              errorMessage: '',
+          });
+      case LOGIN_SUCCESS:
+      case LOGOUT_SUCCESS:
+      case RESET_SUCCESS:
+      case PASSWORD_RESET_EMAIL_SUCCESS:
+      case REGISTER_SUCCESS:
+          return Object.assign({}, state, {
+              isFetching: false,
+              errorMessage: '',
+          });
+      case AUTH_FAILURE:
+          return Object.assign({}, state, {
+              isFetching: false,
+              errorMessage: payload,
+          });
+      case AUTH_INIT_SUCCESS:
+          return Object.assign({}, state, {
+              currentUser: payload.currentUser || null,
+              loadingInit: false,
+          });
+      case AUTH_INIT_ERROR:
+          return Object.assign({}, state, {
+              currentUser: null,
+              loadingInit: false,
+          });
+      default:
+          return state;
   }
 }

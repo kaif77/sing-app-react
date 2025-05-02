@@ -1,7 +1,9 @@
 import React from 'react';
 import Rickshaw from 'rickshaw';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import config from '../../../../config'
 
 class RickshawGraph extends React.Component {
 
@@ -27,6 +29,12 @@ class RickshawGraph extends React.Component {
     window.addEventListener('resize', this.onResizeRickshaw);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.sidebarStatic !== prevProps.sidebarStatic) {
+      setTimeout(() => this.onResizeRickshaw(), 1000)
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResizeRickshaw);
   }
@@ -49,11 +57,11 @@ class RickshawGraph extends React.Component {
       height: this.props.height,
       series: [
         {
-          color: '#ffdddd',
+          color: "rgba(111, 176, 249, 0.5)",
           data: seriesData[0],
           name: 'Uploads',
         }, {
-          color: '#f55d5d',
+          color: config.app.themeColors.primary,
           data: seriesData[1],
           name: 'Downloads',
         },
@@ -87,4 +95,10 @@ class RickshawGraph extends React.Component {
   }
 }
 
-export default RickshawGraph;
+function mapStateToProps(store) {
+  return {
+    sidebarStatic: store.navigation.sidebarStatic,
+  };
+}
+
+export default connect(mapStateToProps)(RickshawGraph);

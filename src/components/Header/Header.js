@@ -1,40 +1,52 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   Nav,
   Dropdown,
   NavItem,
   NavLink,
-  Badge,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   UncontrolledTooltip,
-  InputGroupAddon,
   InputGroup,
   Input,
   Form,
   FormGroup,
-} from 'reactstrap';
-import $ from 'jquery';
+} from "reactstrap";
+import cx from "classnames";
+import { NavbarTypes } from "../../reducers/layout";
+import Notifications from "../Notifications";
+import { logoutUser } from "../../actions/auth";
+// import Joyride, { STATUS } from 'react-joyride';
+import {
+  toggleSidebar,
+  openSidebar,
+  closeSidebar,
+  changeActiveSidebarItem,
+} from "../../actions/navigation";
 
-import Notifications from '../Notifications';
-import { logoutUser } from '../../actions/user';
-import { toggleSidebar, openSidebar, closeSidebar, changeActiveSidebarItem } from '../../actions/navigation';
+import adminDefault from "../../images/chat/chat2.png";
+import Menu from "../../images/sidebar/basil/Menu";
+import Exchange from "../../images/sidebar/basil/Exchange";
+import Cross from "../../images/sidebar/basil/Cross";
+import Settings from "../../images/sidebar/basil/Settings";
+import Search from "../../images/sidebar/basil/Search";
+import UserDefault from "../../images/sidebar/basil/UserDefault";
+import EnvelopeBlack from "../../images/sidebar/basil/EnvelopeBlack";
+import PowerButton from "../../images/sidebar/basil/PowerButton";
+import CalendarIcon from "../../images/sidebar/Outline/Calendar";
 
-import a5 from '../../images/people/a5.jpg';
-import a6 from '../../images/people/a6.jpg';
-
-import s from './Header.module.scss'; // eslint-disable-line css-modules/no-unused-class
+import s from "./Header.module.scss";
 
 class Header extends React.Component {
   static propTypes = {
     sidebarOpened: PropTypes.bool.isRequired,
     sidebarStatic: PropTypes.bool.isRequired,
-    chatToggle: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.shape({
       pathname: PropTypes.string,
@@ -54,32 +66,63 @@ class Header extends React.Component {
       menuOpen: false,
       notificationsOpen: false,
       notificationsTabSelected: 1,
+      focus: false,
+      showNewMessage: false,
+      hideMessage: true,
+      run: false,
+      steps: [
+        {
+          content: "You can adjust sidebar, or leave it closed 😃",
+          placement: "bottom",
+          target: "#toggleSidebar",
+          textAlign: "center",
+          disableBeacon: true,
+        },
+        {
+          content: "Admin can check out his messages and tasks easily 😃",
+          placement: "bottom",
+          target: ".dropdown-toggle",
+        },
+        {
+          content:
+            "Clickable cog can provide you with link to important pages 😄",
+          placement: "bottom",
+          target: ".tutorial-dropdown",
+        },
+        {
+          content:
+            "Open theme cusomizer sidebar, play with it or watch tour! ❤️",
+          placement: "left",
+          target: ".helper-button",
+        },
+      ],
     };
   }
-  componentDidMount() {
-    if (window.innerWidth > 576) {
-      setTimeout(() => {
-        const $chatNotification = $('#chat-notification');
-        $chatNotification.removeClass('hide').addClass('animated fadeIn')
-          .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-            $chatNotification.removeClass('animated fadeIn');
-            setTimeout(() => {
-              $chatNotification.addClass('animated fadeOut')
-                .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd' +
-                  ' oanimationend animationend', () => {
-                    $chatNotification.addClass('hide');
-                  });
-            }, 6000);
-          });
-        $chatNotification.siblings('#toggle-chat')
-          .append('<i class="chat-notification-sing animated bounceIn"></i>');
-      }, 4000);
-    }
 
-    $('#search-input').on('blur focus', (e) => {
-      $('#search-input').parents('.input-group')[e.type === 'focus' ? 'addClass' : 'removeClass']('focus');
-    });
+  componentDidMount() {
+    if (window.location.href.includes("main")) {
+      this.setState({ run: true });
+    }
   }
+
+  // handleJoyrideCallback = (CallBackProps) => {
+  //   const { status } = CallBackProps;
+  //
+  //   if (([STATUS.FINISHED, STATUS.SKIPPED]).includes(status)) {
+  //     this.setState({ run: false });
+  //   }
+  //
+  // };
+
+  start = () => {
+    this.setState({
+      run: true,
+    });
+  };
+
+  toggleFocus = () => {
+    this.setState({ focus: !this.state.focus });
+  };
 
   toggleNotifications() {
     this.setState({
@@ -97,10 +140,10 @@ class Header extends React.Component {
       this.props.dispatch(closeSidebar());
       this.props.dispatch(changeActiveSidebarItem(null));
     } else {
-      const paths = this.props.location.pathname.split('/');
+      const paths = this.props.location.pathname.split("/");
       paths.pop();
       this.props.dispatch(openSidebar());
-      this.props.dispatch(changeActiveSidebarItem(paths.join('/')));
+      this.props.dispatch(changeActiveSidebarItem(paths.join("/")));
     }
   }
 
@@ -108,13 +151,13 @@ class Header extends React.Component {
   toggleSidebar() {
     this.props.dispatch(toggleSidebar());
     if (this.props.sidebarStatic) {
-      localStorage.setItem('staticSidebar', 'false');
+      localStorage.setItem("staticSidebar", "false");
       this.props.dispatch(changeActiveSidebarItem(null));
     } else {
-      localStorage.setItem('staticSidebar', 'true');
-      const paths = this.props.location.pathname.split('/');
+      localStorage.setItem("staticSidebar", "true");
+      const paths = this.props.location.pathname.split("/");
       paths.pop();
-      this.props.dispatch(changeActiveSidebarItem(paths.join('/')));
+      this.props.dispatch(changeActiveSidebarItem(paths.join("/")));
     }
   }
 
@@ -124,103 +167,253 @@ class Header extends React.Component {
     });
   }
   render() {
+    const { focus } = this.state;
+    const { openUsersList } = this.props;
+    const navbarType = localStorage.getItem("navbarType") || "static";
+
+    const user = this.props.currentUser;
+    const avatar =
+      user && user.avatar && user.avatar.length && user.avatar[0].publicUrl;
+
+    const firstUserLetter =
+      user && (user.firstName || user.email)[0].toUpperCase();
+
     return (
-      <Navbar className={`${s.root} d-print-none`}>
-        <Nav>
-          <NavItem>
-            <NavLink className="d-md-down-none ml-3" id="toggleSidebar" onClick={this.toggleSidebar}>
-              <i className="la la-bars" />
-            </NavLink>
-            <UncontrolledTooltip placement="bottom" target="toggleSidebar">
-              Turn on/off<br />sidebar<br />collapsing
-            </UncontrolledTooltip>
-            <NavLink className="fs-lg d-lg-none" onClick={this.switchSidebar}>
-              <span className="rounded rounded-lg bg-gray text-white d-md-none"><i className="la la-bars" /></span>
-              <i className="la la-bars ml-3 d-sm-down-none" />
-            </NavLink>
-          </NavItem>
-          <NavItem className="d-sm-down-none">
-            <NavLink className="px-2">
-              <i className="la la-refresh" />
-            </NavLink>
-          </NavItem>
-          <NavItem className="d-sm-down-none">
-            <NavLink className="px-2">
-              <i className="la la-times" />
-            </NavLink>
-          </NavItem>
-
-        </Nav>
-
-        <Form className="d-sm-down-none ml-5" inline>
-          <FormGroup>
-            <InputGroup className="input-group-no-border">
-              <InputGroupAddon addonType="prepend">
-                <i className="la la-search" />
-              </InputGroupAddon>
-              <Input id="search-input" placeholder="Search Dashboard" />
-            </InputGroup>
-          </FormGroup>
-        </Form>
-
-        <NavLink className={`${s.navbarBrand} d-md-none`}>
-          <i className="fa fa-circle text-gray mr-n-sm" />
-          <i className="fa fa-circle text-warning" />
-          &nbsp;
-          sing
-          &nbsp;
-          <i className="fa fa-circle text-warning mr-n-sm" />
-          <i className="fa fa-circle text-gray" />
-        </NavLink>
-
-        <Nav className="ml-auto">
-          <Dropdown nav isOpen={this.state.notificationsOpen} toggle={this.toggleNotifications} id="basic-nav-dropdown" className={`${s.notificationsMenu} d-sm-down-none`}>
-            <DropdownToggle nav caret>
-              <span className={`${s.avatar} thumb-sm float-left mr-2`}>
-                <img className="rounded-circle" src={a5} alt="..." />
-              </span>
-              <span className="small">Philip <span className="fw-semi-bold">Smith</span></span>
-              <span className="ml-1 circle bg-warning text-white fw-bold">13</span>
-            </DropdownToggle>
-            <DropdownMenu right className={`${s.notificationsWrapper} py-0 animated animated-fast fadeInUp`}>
-              <Notifications />
-            </DropdownMenu>
-          </Dropdown>
-          <Dropdown nav isOpen={this.state.menuOpen} toggle={this.toggleMenu} className="d-sm-down-none">
-            <DropdownToggle nav>
-              <i className="la la-cog" />
-            </DropdownToggle>
-            <DropdownMenu right className="super-colors">
-              <DropdownItem><i className="la la-user" /> My Account</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem href="/calendar">Calendar</DropdownItem>
-              <DropdownItem href="/inbox">Inbox &nbsp;&nbsp;<Badge color="danger" pill className="animated bounceIn">9</Badge></DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem onClick={this.doLogout}><i className="la la-sign-out" /> Log Out</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-          <NavItem>
-            <NavLink className="d-sm-down-none mr-3" id="toggle-chat" onClick={this.props.chatToggle}>
-              <i className="la la-globe" />
-            </NavLink>
-            <div id="chat-notification" className={`${s.chatNotification} hide `}>
-              <div className={s.chatNotificationInner}>
-                <h6 className={`${s.title} d-flex`}>
-                  <span className="thumb-xs">
-                    <img src={a6} alt="" className="rounded-circle mr-xs float-left" />
+      <Navbar
+        className={`${s.root} d-print-none ${navbarType === NavbarTypes.FLOATING ? s.navbarFloatingType : ""}`}
+        style={{ zIndex: !openUsersList ? 100 : 0 }}
+      >
+        {/*<Joyride*/}
+        {/*  callback={this.handleJoyrideCallback}*/}
+        {/*  continuous={true}*/}
+        {/*  run={this.state.run}*/}
+        {/*  showSkipButton={true}*/}
+        {/*  steps={this.state.steps}*/}
+        {/*  spotlightPadding={-10}*/}
+        {/*  disableOverlay={true}*/}
+        {/*  disableScrolling*/}
+        {/*  styles={{*/}
+        {/*    options: {*/}
+        {/*      arrowColor: '#ffffff',*/}
+        {/*      backgroundColor: '#ffffff',*/}
+        {/*      overlayColor: 'rgba(79, 26, 0, 0.4)',*/}
+        {/*      primaryColor: '#000',*/}
+        {/*      textColor: '#495057',*/}
+        {/*      spotlightPadding: 0,*/}
+        {/*      zIndex: 1000,*/}
+        {/*      padding: 5,*/}
+        {/*      width: 240,*/}
+        {/*    },*/}
+        {/*    tooltip: {*/}
+        {/*      fontSize: 15,*/}
+        {/*      padding: 15,*/}
+        {/*    },*/}
+        {/*    tooltipContent: {*/}
+        {/*      padding: '20px 5px 0',*/}
+        {/*    },*/}
+        {/*    floater: {*/}
+        {/*      arrow: {*/}
+        {/*        padding: 10*/}
+        {/*      },*/}
+        {/*    },*/}
+        {/*    buttonClose: {*/}
+        {/*      display: 'none'*/}
+        {/*    },*/}
+        {/*    buttonNext: {*/}
+        {/*      backgroundColor: "#21AE8C",*/}
+        {/*      fontSize: 13,*/}
+        {/*      borderRadius: 4,*/}
+        {/*      color: "#ffffff",*/}
+        {/*      fontWeight: "bold",*/}
+        {/*      outline: "none"*/}
+        {/*    },*/}
+        {/*    buttonBack: {*/}
+        {/*      color: "#798892",*/}
+        {/*      marginLeft: 'auto',*/}
+        {/*      fontSize: 13,*/}
+        {/*      marginRight: 5,*/}
+        {/*    },*/}
+        {/*    buttonSkip: {*/}
+        {/*      color: "#798892",*/}
+        {/*      fontSize: 13,*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*/>*/}
+        <div className="d-flex flex-row justify-content-md-start flex-grow-1 align-content-center align-self-start">
+          <Nav className="my-auto">
+            <NavItem>
+              <NavLink
+                className={`d-md-down-none ${s.toggleSidebar}`}
+                id="toggleSidebar"
+                onClick={this.toggleSidebar}
+              >
+                <span className={s.headerSvgFlipColor}>
+                  <Menu />
+                </span>
+              </NavLink>
+              <UncontrolledTooltip placement="bottom" target="toggleSidebar">
+                Turn on/off
+                <br />
+                sidebar
+                <br />
+                collapsing
+              </UncontrolledTooltip>
+              <NavLink className="fs-lg d-md-none" onClick={this.switchSidebar}>
+                <span
+                  className={`rounded rounded-lg d-md-none d-sm-down-block`}
+                >
+                  <span
+                    className={s.headerSvgFlipColor}
+                    style={{ fontSize: 30 }}
+                  >
+                    <Menu />
                   </span>
-                  Jess Smith
-                </h6>
-                <p className={s.text}>Hi there! <br /> This is a completely new version of Sing App <br /> built with <strong className="text-primary">React JS</strong> </p>
-              </div>
-            </div>
-          </NavItem>
-          <NavItem className="fs-lg d-md-none">
-            <NavLink href="#" onClick={this.props.chatToggle}>
-              <span className="rounded rounded-lg bg-gray text-white"><i className="la la-globe" /></span>
-            </NavLink>
-          </NavItem>
-        </Nav>
+                </span>
+                <span className={`ms-3 d-sm-down-none ${s.headerSvgFlipColor}`}>
+                  <Menu />
+                </span>
+              </NavLink>
+            </NavItem>
+            <NavItem className="d-sm-down-none">
+              <NavLink className="px-2">
+                <span className={s.headerSvgFlipColor}>
+                  <Exchange />
+                </span>
+              </NavLink>
+            </NavItem>
+            <NavItem className="d-sm-down-none">
+              <NavLink className="px-2">
+                <span className={s.headerSvgFlipColor}>
+                  <Cross />
+                </span>
+              </NavLink>
+            </NavItem>
+          </Nav>
+
+          <Form className={`${s.headerSearchInput} d-sm-down-none`} inline>
+            <FormGroup>
+              <InputGroup
+                onFocus={this.toggleFocus}
+                onBlur={this.toggleFocus}
+                className={cx("input-group-no-border", { focus: !!focus })}
+              >
+                <div
+                  className={`${s.headerSvgFlipColor} input-group-prepend-icon`}
+                >
+                  <Search />
+                </div>
+                <Input
+                  id="search-input"
+                  placeholder="Search Dashboard"
+                  className={cx({ focus: !!focus })}
+                />
+              </InputGroup>
+            </FormGroup>
+          </Form>
+
+          <NavLink
+            className={`${s.navbarBrand} d-md-none ${s.headerSvgFlipColor}`}
+          >
+            <i className="fa fa-circle text-primary me-n-sm" />
+            <i className="fa fa-circle text-danger" />
+            &nbsp; sing &nbsp;
+            <i className="fa fa-circle text-danger me-n-sm" />
+            <i className="fa fa-circle text-primary" />
+          </NavLink>
+        </div>
+
+        <div>
+          <Nav className="ms-auto">
+            <Dropdown
+              nav
+              isOpen={this.state.notificationsOpen}
+              toggle={this.toggleNotifications}
+              id="basic-nav-dropdown"
+              className={`${s.notificationsMenu}`}
+            >
+              <DropdownToggle nav caret className={s.headerSvgFlipColor}>
+                <span className={`${s.avatar} rounded-circle float-start me-3`}>
+                  {avatar ? (
+                    <img
+                      src={avatar}
+                      onError={(e) => (e.target.src = adminDefault)}
+                      alt="..."
+                      title={user && (user.firstName || user.email)}
+                    />
+                  ) : user && user.role === "admin" ? (
+                    <img
+                      src={adminDefault}
+                      onError={(e) => (e.target.src = adminDefault)}
+                      alt="..."
+                      title={user && (user.firstName || user.email)}
+                    />
+                  ) : (
+                    <span title={user && (user.firstName || user.email)}>
+                      {firstUserLetter}
+                    </span>
+                  )}
+                </span>
+                <span
+                  className={`small m-2 d-sm-down-none ${s.headerTitle} ${this.props.sidebarStatic ? s.adminEmail : ""}`}
+                >
+                  {user ? user.firstName || user.email : "Philip smith"}
+                </span>
+                <span className="m-1 circle bg-light-red text-white fw-semi-bold d-sm-down-none">
+                  13
+                </span>
+              </DropdownToggle>
+              <DropdownMenu
+                end
+                className={`${s.notificationsWrapper} py-0 animated animated-fast fadeInUp`}
+              >
+                <Notifications />
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown
+              nav
+              isOpen={this.state.menuOpen}
+              toggle={this.toggleMenu}
+              className="tutorial-dropdown pr-4"
+            >
+              <DropdownToggle nav className={`${s.mobileCog}`}>
+                <span className={`${s.headerSvgFlipColor}`}>
+                  <Settings />
+                </span>
+              </DropdownToggle>
+              <DropdownMenu
+                end
+                className={`${s.headerDropdownLinks} super-colors`}
+              >
+                <DropdownItem tag={Link} to="/app/profile">
+                  <span className={s.headerDropdownIcon}>
+                    <UserDefault />
+                  </span>
+                  My Account
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem tag={Link} to="/app/extra/calendar">
+                  <span className={s.headerDropdownIcon}>
+                    <CalendarIcon />
+                  </span>
+                  Calendar
+                </DropdownItem>
+                <DropdownItem tag={Link} to="/app/inbox">
+                  <span className={s.headerDropdownIcon}>
+                    <EnvelopeBlack />
+                  </span>
+                  Inbox &nbsp;&nbsp;
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem onClick={this.doLogout}>
+                  <span className={s.headerDropdownIcon}>
+                    <PowerButton />
+                  </span>{" "}
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </Nav>
+        </div>
       </Navbar>
     );
   }
@@ -230,8 +423,11 @@ function mapStateToProps(store) {
   return {
     sidebarOpened: store.navigation.sidebarOpened,
     sidebarStatic: store.navigation.sidebarStatic,
+    navbarType: store.layout.navbarType,
+    navbarColor: store.layout.navbarColor,
+    openUsersList: store.chat.openUsersList,
+    currentUser: store.auth.currentUser,
   };
 }
 
 export default withRouter(connect(mapStateToProps)(Header));
-

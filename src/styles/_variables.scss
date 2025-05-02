@@ -2,12 +2,7 @@
 
 $enable-shadows:            true !default;
 
-$glyphicons-halflings-include-bonus: false !default;
-$glyphicons-halflings-class-prefix: glyphicon !default;
-$glyphicons-halflings-font-base-size: 14px !default;
-
-$glyphicons-halflings-font-path: '../fonts/glyphicons' !default;
-$fa-font-path: '../fonts/font-awesome' !default;
+$fa-font-path: '~font-awesome/fonts/' !default;
 
 /*
  * Typography
@@ -20,7 +15,9 @@ $font-size-larger:        1.1rem;
 $font-size-mini:          0.9rem;
 $font-size-index:         0.7rem;
 
-$font-family-base: 'Montserrat', sans-serif;
+$font-family-base: 'Poppins', sans-serif;
+
+$headings-font-weight: 400;
 
 // Color system
 //
@@ -35,19 +32,25 @@ $gray-600: #798892 !default;
 $gray-700: #495057 !default;
 $gray-800: #3c484f !default;
 $gray-900: #29323a !default;
+$gray-default: #5A5D76 !default;
 $black:    #000 !default;
 $gray-light: $gray-100 !default;
 
-$blue:    #547fff !default;
-$indigo:  #7f3ddb !default;
-$purple:  #9964e3 !default;
-$pink:    #e54e9a !default;
-$red:     #f55d5d !default;
-$orange:  #ff7d47 !default;
-$yellow:  #ffc247 !default;
-$green:   #68ca66 !default;
-$teal:    #3abf94 !default;
-$cyan:    #17a2b8 !default;
+$blue:         #6FB0F9 !default;
+$blue-300: rgba($blue, 0.3) !default;
+$indigo:       #7f3ddb !default;
+$purple:       #10CFD0 !default;
+$pink:         #e54e9a !default;
+$red:          #FF5574 !default;
+$orange:       #ff7d47 !default;
+$yellow:       #EBB834 !default;
+$green:        #68ca66 !default;
+$teal:         #26CD5F !default;
+$cyan:         #17a2b8 !default;
+$dark-gray:    #D7DFE6 !default;
+$gray-inverse: #30324C !default;
+$subtle-white: #EAF0F6 !default;
+$light-red: #FF5574 !default;
 
 $theme-colors: (
   primary: $blue,
@@ -57,10 +60,12 @@ $theme-colors: (
   warning: $yellow,
   danger: $red,
   dark: $gray-800,
-  inverse: $gray-700,
-  gray: $gray-300,
+  inverse: $gray-inverse,
+  gray: $gray-default,
   light: $gray-100,
-  default: #e9ecef,
+  default: #9083F7,
+  gray-default: $gray-default,
+  primary-300: $blue-300,
   primary-light: #dee4ee,
   success-light: #ecfaec,
   info-light: #f2fafa,
@@ -68,9 +73,9 @@ $theme-colors: (
   danger-light: #fff2ef,
 );
 
-$link-color: #218bc3;
+$link-color: $blue;
 
-$text-color: $gray-700 !default;
+$text-color: #0C2236 !default;
 
 $font-weight-bold: 700 !default;
 $font-weight-semi-bold: 600 !default;
@@ -80,15 +85,16 @@ $font-weight-base: $font-weight-thin !default;
 
 $addition-bg: $gray-100 !default;
 
-$body-bg: #fafbff !default;
+$body-bg: #F9FBFD !default;
 $body-bg-light: lighten($body-bg, 3%);
-
-$logo-color: $gray-800;
 
 //== Components
 //
 
+$grid-gutter-width: 40px;
+
 $content-padding: 40px;
+$content-padding-sm: 15px;
 
 $nav-link-padding: 10px;
 
@@ -99,39 +105,43 @@ $border-radius-sm:       0.25rem !default;
 //== Sidebar
 //
 
-$sidebar-width-open: 224px;
+$sidebar-transition-time: 0.3s !default;
+
+$sidebar-width-open: 230px;
 $sidebar-width-closed: 50px;
 $sidebar-transition-time: 0.3s !default;
 
-$sidebar-bg-color: #fff !default;
-$sidebar-color: #6c757d !default;
-$sidebar-action-bg: #f9fafe !default;
+$chat-sidebar-width-open: 250px;
+
+$sidebar-border: 1px solid darken($body-bg, 2%);
 
 $sidebar-item-border-color: transparent !default;
 $sidebar-item-active-color: $yellow !default;
-$sidebar-item-hover-bg-color: $sidebar-action-bg;
-$sidebar-scrollbar-bg: $gray-200;
-
-$chat-sidebar-bg-color: $sidebar-bg-color !default;
+$sidebar-scrollbar-bg: var(--sidebar-item-active-color);
 
 $breadcrumb-divider: '>';
 $breadcrumb-padding-y: 0;
 $breadcrumb-bg: transparent;
 
 $widget-bg: #fff;
-$widget-title-color: #444;
-$widget-shadow: 0 0 40px darken($body-bg, 2%);
-$widget-shadow-designated: -1px 0 8px $gray-400;
+$widget-title-color: $text-color;
+$widget-shadow-designated: -1px 0 8px rgba(0,0,0,.2);
+$widget-border-radius: $border-radius-lg;
 
 $input-btn-line-height: 1.5;
 
 $input-btn-padding-y-sm: 0.4rem;
 $input-btn-padding-x-sm: 0.8rem;
 
+//== Theme Helper
+//
+
+$helper-width: 300px;
+
 //== Navbar
 //
 
-$navbar-height:  50px !default;
+$navbar-height:  60px !default;
 $navbar-padding-y: 0 !default;
 $navbar-padding-x: 0 !default;
 
@@ -143,7 +153,6 @@ $navbar-link-active-color: $gray-700 !default;
 $navbar-link-active-bg: $gray-300 !default;
 $navbar-link-disabled-color: $gray-400 !default;
 $navbar-link-disabled-bg: transparent !default;
-$navbar-bg: $body-bg !default;
 
 // Dropdowns
 $dropdown-link-color: $text-color;
@@ -179,6 +188,7 @@ $breadcrumb-active-color: $gray-700;
 
 // Progress bars
 $progress-height: 0.65rem !default;
+$progress-box-shadow: none;
 
 // Alerts
 $alert-transparent: 0.25;
@@ -220,3 +230,17 @@ $padding-small-horizontal:  0.75rem !default;
 // -------------------------
 
 $screen-lg-height: 670px !default;
+
+
+//== Chat Sidebar
+//
+$chat-sidebar-width-open: 250px;
+
+$chat-component-padding: 21px;
+$chat-section-width: 330px;
+
+$blockquote-small-color:      $gray-600 !default;
+$hr-border-color:             rgba($black, .1) !default;
+$table-cell-padding:          .75rem !default;
+$emphasized-link-hover-darken-percentage: 15% !default;
+$badge-focus-width:          .2rem !default;

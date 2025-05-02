@@ -1,6 +1,7 @@
 html {
   font-weight: 100;
   font-size: $font-size-initial;
+  overflow-x: hidden;
 }
 
 body {
@@ -48,5 +49,9 @@ ul,
 ol {
   list-style: none;
   padding-left: 0;
+}
+
+h1 small {
+  font-size: 68%;
 }
 

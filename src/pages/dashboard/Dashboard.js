@@ -10,11 +10,9 @@ import {
 
 import Widget from '../../components/Widget';
 
-/* eslint-disable */
 import Calendar from './components/calendar/Calendar';
-import Map from './components/mapael-map/MapaelMap';
+import Map from './components/am4chartMap/am4chartMap';
 import Rickshaw from './components/rickshaw/Rickshaw';
-/* eslint-enable */
 
 import AnimateNumber from 'react-animated-number';
 
@@ -88,14 +86,14 @@ class Dashboard extends React.Component {
             >
               <p>Status: <strong>Live</strong></p>
               <p>
-                <span className="circle bg-warning text-white"><i className="fa fa-map-marker" /></span> &nbsp;
+                <span className="circle bg-primary text-white"><i className="fa fa-map-marker" /></span> &nbsp;
                 146 Countries, 2759 Cities
               </p>
               <div className="row progress-stats">
                 <div className="col-md-9 col-12">
                   <h6 className="name">Foreign Visits</h6>
                   <p className="description deemphasize mb-xs">Some Cool Text</p>
-                  <Progress color="primary" value="60" className="bg-white progress-xs" />
+                  <Progress color="default" value="60" className="bg-white progress-xs mb-4" />
                 </div>
                 <div className="col-md-3 col-12 text-center">
                   <span className="status rounded rounded-lg bg-body-light">
@@ -107,7 +105,7 @@ class Dashboard extends React.Component {
                 <div className="col-md-9 col-12">
                   <h6 className="name">Local Visits</h6>
                   <p className="description deemphasize mb-xs">P. to C. Conversion</p>
-                  <Progress color="danger" value="39" className="bg-white progress-xs" />
+                  <Progress color="warning" value="39" className="bg-white progress-xs mb-4" />
                 </div>
                 <div className="col-md-3 col-12 text-center">
                   <span className="status rounded rounded-lg bg-body-light">
@@ -119,7 +117,7 @@ class Dashboard extends React.Component {
                 <div className="col-md-9 col-12">
                   <h6 className="name">Sound Frequencies</h6>
                   <p className="description deemphasize mb-xs">Average Bitrate</p>
-                  <Progress color="success" value="80" className="bg-white progress-xs" />
+                  <Progress color="danger" value="80" className="bg-white progress-xs mb-4" />
                 </div>
                 <div className="col-md-3 col-12 text-center">
                   <span className="status rounded rounded-lg bg-body-light">
@@ -130,16 +128,14 @@ class Dashboard extends React.Component {
               <h6 className="fw-semi-bold mt">Map Distributions</h6>
               <p>Tracking: <strong>Active</strong></p>
               <p>
-                <span className="circle bg-warning text-white"><i className="fa fa-cog" /></span>
+                <span className="circle bg-primary text-white"><i className="fa fa-cog" /></span>
                 &nbsp; 391 elements installed, 84 sets
               </p>
               <div className="input-group mt">
                 <input type="text" className="form-control" placeholder="Search Map" />
-                <span className="input-group-btn">
-                  <button type="submit" className="btn btn-default">
-                    <i className="fa fa-search text-gray" />
-                  </button>
-                </span>
+                <button type="submit" className="btn btn-gray-default">
+                  <i className="fa fa-search text-white" />
+                </button>
               </div>
 
             </Widget>
@@ -167,10 +163,10 @@ class Dashboard extends React.Component {
                   <p className="value">3.38%</p>
                 </div>
               </div>
-              <Progress color="success" value="60" className="bg-gray-lighter progress-xs" />
+              <Progress color="warning" value="60" className="bg-gray-lighter progress-xs" />
               <p>
                 <small>
-                  <span className="circle bg-warning text-white">
+                  <span className="circle bg-primary text-white">
                     <i className="fa fa-chevron-up" />
                   </span>
                 </small>
@@ -200,7 +196,7 @@ class Dashboard extends React.Component {
               </div>
               <Progress color="danger" value="60" className="bg-gray-lighter progress-xs" />
               <p>
-                <small><span className="circle bg-warning text-white"><i className="fa fa-chevron-down" /></span></small>
+                <small><span className="circle bg-primary text-white"><i className="fa fa-chevron-down" /></span></small>
                 <span className="fw-semi-bold">&nbsp;8% lower</span>
                 &nbsp;than last month
               </p>
@@ -227,7 +223,7 @@ class Dashboard extends React.Component {
               </div>
               <Progress color="bg-primary" value="60" className="bg-gray-lighter progress-xs" />
               <p>
-                <small><span className="circle bg-warning text-white"><i className="fa fa-plus" /></span></small>
+                <small><span className="circle bg-primary text-white"><i className="fa fa-plus" /></span></small>
                 <span className="fw-semi-bold">&nbsp;8 734 higher</span>
                 &nbsp;than last month
               </p>
@@ -239,50 +235,66 @@ class Dashboard extends React.Component {
         <Row>
           <Col lg={4} xs={12}>
             <Widget
-              title={<h6><span className="badge badge-danger">New</span> Messages</h6>}
+              title={<h6><span className="badge bg-danger text-white fw-semi-bold px-1 py-1">New</span> Messages</h6>}
               refresh close
             >
-              <div className="widget-body p-0">
+              <div className="widget-body undo_padding">
                 <div className="list-group list-group-lg">
-                  <button className="list-group-item text-left">
-                    <span className="thumb-sm float-left mr">
-                      <img className="rounded-circle" src={peopleA2} alt="..." />
-                      <i className="status status-bottom bg-success" />
-                    </span>
-                    <div>
-                      <h6 className="m-0">Chris Gray</h6>
-                      <p className="help-block text-ellipsis m-0">Hey! What&apos;s up? So many times since we</p>
+                  <button className="list-group-item text-start">
+                      <div className="d-flex flex-row">
+                        <div>
+                          <span className="thumb-sm float-left me-2">
+                            <img className="rounded-circle" src={peopleA2} alt="..." />
+                            <i className="status status-bottom bg-success" />
+                          </span>
+                        </div>
+                        <div>
+                          <h6 className="m-0">Chris Gray</h6>
+                          <p className="help-block text-ellipsis m-0">Hey! What&apos;s up? So many times since we</p>
+                        </div>
+                      </div>
+                  </button>
+                  <button className="list-group-item text-start">
+                    <div className="d-flex flex-row">
+                      <div>
+                        <span className="thumb-sm float-left me-2">
+                          <img className="rounded-circle" src={peopleA4} alt="..." />
+                          <i className="status status-bottom bg-success" />
+                        </span>
+                      </div>
+                      <div>
+                        <h6 className="m-0">Jamey Brownlow</h6>
+                        <p className="help-block m-0">Good news coming tonight. Seems they agreed to
+                          proceed</p>
+                      </div>
                     </div>
                   </button>
-                  <button className="list-group-item text-left">
-                    <span className="thumb-sm float-left mr">
-                      <img className="rounded-circle" src={peopleA4} alt="..." />
-                      <i className="status status-bottom bg-success" />
-                    </span>
-                    <div>
-                      <h6 className="m-0">Jamey Brownlow</h6>
-                      <p className="help-block text-ellipsis m-0">Good news coming tonight. Seems they agreed to
-                        proceed</p>
+                  <button className="list-group-item text-start">
+                    <div className="d-flex flex-row">
+                      <div>
+                        <span className="thumb-sm float-left me-2">
+                          <img className="rounded-circle" src={peopleA1} alt="..." />
+                          <i className="status status-bottom bg-warning" />
+                        </span>
+                      </div>
+                      <div>
+                        <h6 className="m-0">Livia Walsh</h6>
+                        <p className="help-block text-ellipsis m-0">Check my latest email plz!</p>
+                      </div>
                     </div>
                   </button>
-                  <button className="list-group-item text-left">
-                    <span className="thumb-sm float-left mr">
-                      <img className="rounded-circle" src={peopleA1} alt="..." />
-                      <i className="status status-bottom bg-warning" />
-                    </span>
-                    <div>
-                      <h6 className="m-0">Livia Walsh</h6>
-                      <p className="help-block text-ellipsis m-0">Check my latest email plz!</p>
-                    </div>
-                  </button>
-                  <button className="list-group-item text-left">
-                    <span className="thumb-sm float-left mr">
-                      <img className="rounded-circle" src={peopleA5} alt="..." />
-                      <i className="status status-bottom bg-danger" />
-                    </span>
-                    <div>
-                      <h6 className="m-0">Jaron Fitzroy</h6>
-                      <p className="help-block text-ellipsis m-0">What about summer break?</p>
+                  <button className="list-group-item text-start">
+                    <div className="d-flex flex-row">
+                      <div>
+                        <span className="thumb-sm float-left me-2">
+                          <img className="rounded-circle" src={peopleA5} alt="..." />
+                          <i className="status status-bottom bg-danger" />
+                        </span>
+                      </div>
+                      <div>
+                        <h6 className="m-0">Jaron Fitzroy</h6>
+                        <p className="help-block text-ellipsis m-0">What about summer break?</p>
+                      </div>
                     </div>
                   </button>
                 </div>
@@ -368,15 +380,15 @@ class Dashboard extends React.Component {
           </Col>
 
           <Col lg={4} xs={12}>
-            <Widget title={<h6>Calendar</h6>} settings close bodyClass="p-0">
+            <Widget title={<h6>Calendar</h6>} settings close bodyClass={"pt-2 px-0 py-0"}>
               <Calendar />
               <div className="list-group fs-mini">
                 <button className="list-group-item text-ellipsis">
-                  <span className="badge badge-pill badge-warning float-right">6:45</span>
+                  <span className="badge rounded-pill bg-danger text-white pull-right px-2 py-1 fw-normal fs-6 float-end">6:45</span>
                   Weed out the flower bed
                 </button>
                 <button className="list-group-item text-ellipsis">
-                  <span className="badge badge-pill badge-success float-right">9:41</span>
+                  <span className="badge rounded-pill bg-warning pull-right px-2 py-1 fw-normal fs-6 float-end">9:41</span>
                   Stop world water pollution
                 </button>
               </div>

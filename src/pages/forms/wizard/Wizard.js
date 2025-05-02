@@ -11,7 +11,7 @@ import {
   Progress,
 } from 'reactstrap';
 import Formsy from 'formsy-react';
-import Select2 from 'react-select2-wrapper';
+import Select from 'react-select';
 import MaskedInput from 'react-maskedinput';
 import Datetime from 'react-datetime';
 import { select2CountriesData, select2ShipmentData, cardTypesData } from './data';
@@ -69,20 +69,18 @@ const StepsComponents = {
       <fieldset>
         <FormGroup>
           <Label for="country-select">Destination Country</Label>
-          <Select2
-            style={{ width: '100%' }}
-            id="country-selec"
-            data={select2CountriesData}
-          />
+            <Select
+              className="selectCustomization"
+              options={select2CountriesData}
+            />
           <p className="help-block">Please choose your country destination</p>
         </FormGroup>
         <FormGroup>
           <Label for="courier">Choose shipping option</Label>
-          <Select2
-            style={{ width: '100%' }}
-            id="courier"
-            data={select2ShipmentData}
-          />
+            <Select
+              className="selectCustomization"
+              options={select2ShipmentData}
+            />
           <p className="help-block">Please choose your shipping option</p>
         </FormGroup>
         <FormGroup>
@@ -110,11 +108,10 @@ const StepsComponents = {
         </FormGroup>
         <FormGroup>
           <Label for="credit-card-type">Choose shipping option</Label>
-          <Select2
-            style={{ width: '100%' }}
-            id="credit-card-type"
-            data={cardTypesData}
-          />
+            <Select 
+              className="selectCustomization"
+              options={cardTypesData}
+            />
         </FormGroup>
         <FormGroup>
           <Label for="credit">Credit Card Number</Label>
@@ -188,14 +185,10 @@ class Wizard extends React.Component {
     const currentStep = this.state.currentStep;
     return (
       <div className={s.root}>
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">YOU ARE HERE</li>
-          <li className="breadcrumb-item active">Form Wizard</li>
-        </ol>
         <h1 className="page-title">Form - <span className="fw-semi-bold">Wizard</span>
         </h1>
         <Row>
-          <Col xl={8} lg={12}>
+          <Col xs={12}>
             <Widget
               close collapse
               className={s.formWizard}
@@ -237,7 +230,7 @@ class Wizard extends React.Component {
                   </NavLink>
                 </NavItem>
               </Nav>
-              <Progress value={this.state.progress} color="gray-light" className="progress-xs" />
+              <Progress value={this.state.progress} color="info" className="progress-xs" />
               <div className="tab-content">
                 <div className={s.stepBody}>
                   <Formsy.Form>

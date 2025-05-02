@@ -18,6 +18,8 @@ import { Sparklines, SparklinesBars } from 'react-sparklines';
 import Widget from '../../../components/Widget';
 import s from './Static.modules.scss';
 
+import config from '../../../config'
+
 class Static extends React.Component {
 
   constructor(props) {
@@ -141,10 +143,6 @@ class Static extends React.Component {
   render() {
     return (
       <div className={s.root}>
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">YOU ARE HERE</li>
-          <li className="breadcrumb-item active">Tables Basic</li>
-        </ol>
         <h2 className="page-title">Tables - <span className="fw-semi-bold">Static</span></h2>
         <Row>
           <Col>
@@ -153,6 +151,7 @@ class Static extends React.Component {
                 Table <span className="fw-semi-bold">Styles</span>
               </h5>} settings close
             >
+            <div className="table-responsive">
               <Table>
                 <thead>
                   <tr className="fs-sm">
@@ -213,11 +212,12 @@ class Static extends React.Component {
                 }
                 </tbody>
               </Table>
+              </div>
               <div className="clearfix">
-                <div className="float-right">
-                  <Button color="default" className="mr-xs" size="sm">Send to...</Button>
+                <div className="float-end">
+                  <Button color="success" className="me-2">Send to...</Button>
                   <UncontrolledButtonDropdown>
-                    <DropdownToggle color="inverse" className="mr-xs" size="sm" caret>Clear</DropdownToggle>
+                    <DropdownToggle color="inverse" className="me-2" caret>Clear</DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem>Clear</DropdownItem>
                       <DropdownItem>Move ...</DropdownItem>
@@ -240,6 +240,7 @@ class Static extends React.Component {
               <h3>Stripped <span className="fw-semi-bold">Table</span></h3>
 
               <p>Each row is highlighted. You will never lost there. Just <code>.table-striped</code> it.</p>
+
               <Table className="table-striped">
                 <thead>
                   <tr>
@@ -284,7 +285,7 @@ class Static extends React.Component {
                     </td>
                     <td>Jacob <Badge color="warning" className="text-gray-dark">ALERT!</Badge></td>
                     <td>Thornton</td>
-                    <td><span className="badge bg-gray">Away</span></td>
+                    <td><span className="badge bg-gray text-white">Away</span></td>
                   </tr>
                   <tr>
                     <td>
@@ -323,28 +324,28 @@ class Static extends React.Component {
                       <td>Mark</td>
                       <td>Otto</td>
                       <td><a href="#">ottoto@example.com</a></td>
-                      <td><Badge color="gray" className="text-gray" pill>Pending</Badge></td>
+                      <td><Badge color="warning" className="text-white" pill>Pending</Badge></td>
                     </tr>
                     <tr>
                       <td>2</td>
                       <td>Jacob</td>
                       <td>Thornton</td>
                       <td><a href="#">fat.thor@example.com</a></td>
-                      <td><Badge color="gray" className="text-gray-light" pill>Unconfirmed</Badge></td>
+                      <td><Badge color="danger" className="text-white" pill>Unconfirmed</Badge></td>
                     </tr>
                     <tr>
                       <td>3</td>
                       <td>Larry</td>
                       <td>the Bird</td>
                       <td><a href="#">larry@example.com</a></td>
-                      <td><Badge color="gray" className="text-gray" pill>New</Badge></td>
+                      <td><Badge color="info" className="text-white" pill>New</Badge></td>
                     </tr>
                     <tr>
                       <td>4</td>
                       <td>Peter</td>
                       <td>Horadnia</td>
                       <td><a href="#">peter@example.com</a></td>
-                      <td><Badge color="gray" className="text-gray-light" pill>Active</Badge></td>
+                      <td><Badge color="success" className="text-white" pill>Active</Badge></td>
                     </tr>
                   </tbody>
                   {/* eslint-enable */}
@@ -392,7 +393,7 @@ class Static extends React.Component {
                     <td className="text-right">$25 224.2</td>
                     <td className="text-center">
                       <Sparklines data={[13, 14, 16, 15, 4, 14, 20]} style={{ width: '35px', height: '20px' }}>
-                        <SparklinesBars style={{ stroke: 'white', fill: '#618fb0' }} />
+                        <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.primary }} />
                       </Sparklines>
                     </td>
                   </tr>
@@ -410,7 +411,7 @@ class Static extends React.Component {
                     <td className="text-right">$87 346.1</td>
                     <td className="text-center">
                       <Sparklines data={[14, 12, 16, 11, 17, 19, 16]} style={{ width: '35px', height: '20px' }}>
-                        <SparklinesBars style={{ stroke: 'white', fill: '#999' }} />
+                        <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.default }} />
                       </Sparklines>
                     </td>
                   </tr>
@@ -428,7 +429,7 @@ class Static extends React.Component {
                     <td className="text-right">$57 944.6</td>
                     <td className="text-center">
                       <Sparklines data={[11, 17, 19, 16, 14, 12, 16]} style={{ width: '35px', height: '20px' }}>
-                        <SparklinesBars style={{ stroke: 'white', fill: '#f0b518' }} />
+                        <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.warning }} />
                       </Sparklines>
                     </td>
                   </tr>
@@ -446,7 +447,7 @@ class Static extends React.Component {
                     <td className="text-right">$118 533.1</td>
                     <td className="text-center">
                       <Sparklines data={[13, 14, 20, 16, 15, 4, 14]} style={{ width: '35px', height: '20px' }}>
-                        <SparklinesBars style={{ stroke: 'white', fill: '#e5603b' }} />
+                        <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.danger }} />
                       </Sparklines>
                     </td>
                   </tr>
@@ -464,7 +465,7 @@ class Static extends React.Component {
                     <td className="text-right">$72 854.5</td>
                     <td className="text-center">
                       <Sparklines data={[16, 15, 4, 14, 13, 14, 20]} style={{ width: '35px', height: '20px' }}>
-                        <SparklinesBars style={{ stroke: 'white', fill: '#618fb0' }} />
+                        <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.success }} />
                       </Sparklines>
                     </td>
                   </tr>
@@ -514,7 +515,7 @@ class Static extends React.Component {
                       <td className="text-right">$25 224.2</td>
                       <td className="text-center">
                         <Sparklines data={[13, 14, 16, 15, 4, 14, 20]} style={{ width: '35px', height: '20px' }}>
-                          <SparklinesBars style={{ stroke: 'white', fill: '#618fb0' }} />
+                          <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.inverse }} />
                         </Sparklines>
                       </td>
                     </tr>
@@ -532,7 +533,7 @@ class Static extends React.Component {
                       <td className="text-right">$87 346.1</td>
                       <td className="text-center">
                         <Sparklines data={[14, 12, 16, 11, 17, 19, 16]} style={{ width: '35px', height: '20px' }}>
-                          <SparklinesBars style={{ stroke: 'white', fill: '#999' }} />
+                          <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.primary }} />
                         </Sparklines>
                       </td>
                     </tr>
@@ -550,7 +551,7 @@ class Static extends React.Component {
                       <td className="text-right">$57 944.6</td>
                       <td className="text-center">
                         <Sparklines data={[11, 17, 19, 16, 14, 12, 16]} style={{ width: '35px', height: '20px' }}>
-                          <SparklinesBars style={{ stroke: 'white', fill: '#f0b518' }} />
+                          <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.warning }} />
                         </Sparklines>
                       </td>
                     </tr>
@@ -568,7 +569,7 @@ class Static extends React.Component {
                       <td className="text-right">$118 533.1</td>
                       <td className="text-center">
                         <Sparklines data={[13, 14, 20, 16, 15, 4, 14]} style={{ width: '35px', height: '20px' }}>
-                          <SparklinesBars style={{ stroke: 'white', fill: '#e5603b' }} />
+                          <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.primary }} />
                         </Sparklines>
                       </td>
                     </tr>
@@ -586,7 +587,7 @@ class Static extends React.Component {
                       <td className="text-right">$72 854.5</td>
                       <td className="text-center">
                         <Sparklines data={[16, 15, 4, 14, 13, 14, 20]} style={{ width: '35px', height: '20px' }}>
-                          <SparklinesBars style={{ stroke: 'white', fill: '#618fb0' }} />
+                          <SparklinesBars style={{ stroke: 'white', fill: config.app.themeColors.danger }} />
                         </Sparklines>
                       </td>
                     </tr>

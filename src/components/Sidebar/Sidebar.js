@@ -6,10 +6,26 @@ import { withRouter } from 'react-router-dom';
 import { dismissAlert } from '../../actions/alerts';
 import s from './Sidebar.module.scss';
 import LinksGroup from './LinksGroup/LinksGroup';
-
 import { openSidebar, closeSidebar, changeActiveSidebarItem } from '../../actions/navigation';
 import isScreen from '../../core/screenHelper';
-import { logoutUser } from '../../actions/user';
+import { logoutUser } from '../../actions/auth';
+
+import Home from '../../images/sidebar/basil/Home';
+import User from '../../images/sidebar/basil/User';
+import ShoppingCart from '../../images/sidebar/basil/ShoppingCart';
+import Chat from '../../images/sidebar/basil/Chat';
+import Stack from '../../images/sidebar/basil/Stack';
+import Envelope from '../../images/sidebar/basil/Envelope';
+import Document from '../../images/sidebar/basil/Document';
+import Apps from '../../images/sidebar/basil/Apps';
+import Asana from '../../images/sidebar/basil/Asana';
+import Columns from '../../images/sidebar/basil/Columns';
+import ChartPieAlt from '../../images/sidebar/basil/ChartPieAlt';
+import Layout from '../../images/sidebar/basil/Layout';
+import Rows from '../../images/sidebar/basil/Rows';
+import Location from '../../images/sidebar/basil/Location';
+import Fire from '../../images/sidebar/basil/Fire';
+import Menu from '../../images/sidebar/basil/Menu';
 
 class Sidebar extends React.Component {
   static propTypes = {
@@ -62,12 +78,13 @@ class Sidebar extends React.Component {
 
   render() {
     return (
+      <div className={`${(!this.props.sidebarOpened && !this.props.sidebarStatic ) ? s.sidebarClose : ''} ${s.sidebarWrapper}`}>
       <nav
         onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
-        className={[s.root, this.props.sidebarStatic ? s.staticSidebar : '', !this.props.sidebarOpened ? s.sidebarClose : ''].join(' ')}
+        className={s.root}
       >
         <header className={s.logo}>
-          <a href="https://demo.flatlogic.com/sing-app/"><span className="text-warning">Sing</span> App</a>
+          <a href="https://demo.flatlogic.com/sing-app-react/"><span className={s.logoStyle}>Sing <span className={s.logoPart}>App</span></span> </a>
         </header>
         <ul className={s.nav}>
           <LinksGroup
@@ -76,6 +93,7 @@ class Sidebar extends React.Component {
             header="Dashboard"
             isHeader
             iconName="flaticon-home"
+            iconElement={<Home/>}
             link="/app/main"
             index="main"
             childrenLinks={[
@@ -91,29 +109,81 @@ class Sidebar extends React.Component {
             ]}
           />
           <LinksGroup
+              onActiveSidebarItemChange={activeItem => this.props.dispatch(changeActiveSidebarItem(activeItem))}
+              activeItem={this.props.activeItem}
+              header="Users"
+              isHeader
+              labelColor="danger"
+              iconElement={<User />}
+              conName="flaticon-user"
+              link="/admin"
+              index="admin"
+              label="Real App"
+              exact={false}
+              childrenLinks={[
+                  {
+                    header: 'User Management', link: '/admin/users',
+                  },
+                  {
+                    header: 'My Profile', link: '/app/profile',
+                  },
+                  {
+                      header: 'Edit Profile', link: '/app/edit_profile',
+                  },
+                  {
+                      header: 'Change Password', link: '/app/password',
+                  },
+              ]}
+          />
+          <LinksGroup
+            header="Chat"
+            link="/app/chat"
+            isHeader
+            iconElement={<Chat/>}
+            label="Awesome"
+            iconName="flaticon-users"
+            labelColor="info"
+          />
+            <LinksGroup
+                onActiveSidebarItemChange={activeItem => this.props.dispatch(changeActiveSidebarItem(activeItem))}
+                activeItem={this.props.activeItem}
+                header="E-commerce"
+                isHeader
+                labelColor="danger"
+                iconElement={<ShoppingCart />}
+                iconName="flaticon-diamond"
+                link="/app/ecommerce"
+                index="ecommerce"
+                label="NodeJS/.NET"
+                exact={false}
+                childrenLinks={[
+                    {
+                        header: 'Product Management', link: '/app/ecommerce/management',
+                    },
+                    {
+                        header: 'Products Grid', link: '/app/ecommerce/products',
+                    },
+                    {
+                        header: 'Product Page', link: '/app/ecommerce/product',
+                    },
+                ]}
+            />
+          <LinksGroup
             onActiveSidebarItemChange={activeItem => this.props.dispatch(changeActiveSidebarItem(activeItem))}
             activeItem={this.props.activeItem}
             header="Sing Package"
+            iconElement={<Stack/>}
             link="/app/package"
             isHeader
             iconName="flaticon-database-1"
             index="packages"
-            label="new"
-          />
-          <LinksGroup
-            onActiveSidebarItemChange={activeItem => this.props.dispatch(changeActiveSidebarItem(activeItem))}
-            activeItem={this.props.activeItem}
-            header="Profile"
-            link="/app/profile"
-            isHeader
-            iconName="flaticon-user"
-            index="profile"
           />
           <LinksGroup
             onActiveSidebarItemChange={activeItem => this.props.dispatch(changeActiveSidebarItem(activeItem))}
             activeItem={this.props.activeItem}
             header="Email"
             link="/app/inbox"
+            iconElement={<Envelope/>}
             isHeader
             iconName="flaticon-paper-plane"
             index="inbox"
@@ -122,19 +192,15 @@ class Sidebar extends React.Component {
           <LinksGroup
             onActiveSidebarItemChange={activeItem => this.props.dispatch(changeActiveSidebarItem(activeItem))}
             activeItem={this.props.activeItem}
-            header="E-commerce"
+            header="Documentation"
+            link="/documentation"
             isHeader
-            iconName="flaticon-diamond"
-            link="/app/ecommerce"
-            index="ecommerce"
-            childrenLinks={[
-              {
-                header: 'Products Grid', link: '/app/ecommerce/products',
-              },
-              {
-                header: 'Product Page', link: '/app/ecommerce/product',
-              },
-            ]}
+            iconElement={<Document/>}
+            iconName="flaticon-file"
+            index="documentation"
+            label="new"
+            labelColor="success"
+            target="_blank"
           />
           <h5 className={[s.navTitle, s.groupTitle].join(' ')}>TEMPLATE</h5>
           <LinksGroup
@@ -142,6 +208,7 @@ class Sidebar extends React.Component {
             activeItem={this.props.activeItem}
             header="Core"
             isHeader
+            iconElement={<Apps/>}
             iconName="flaticon-network"
             link="/app/core"
             index="core"
@@ -162,6 +229,7 @@ class Sidebar extends React.Component {
             activeItem={this.props.activeItem}
             header="UI Elements"
             isHeader
+            iconElement={<Asana/>}
             iconName="flaticon-layers"
             link="/app/ui"
             index="ui"
@@ -221,6 +289,7 @@ class Sidebar extends React.Component {
             activeItem={this.props.activeItem}
             header="Forms"
             isHeader
+            iconElement={<Columns/>}
             iconName="flaticon-list"
             link="/app/forms"
             index="forms"
@@ -242,6 +311,7 @@ class Sidebar extends React.Component {
             header="Charts"
             link="/app/charts"
             isHeader
+            iconElement={<ChartPieAlt/>}
             iconName="flaticon-controls"
             index="charts"
             childrenLinks={[
@@ -249,25 +319,20 @@ class Sidebar extends React.Component {
                 header: 'Charts Overview', link: '/app/charts/overview',
               },
               {
-                header: 'Flot Charts', link: '/app/charts/flot',
+                header: 'Apex Charts', link: '/app/charts/apex',
               },
               {
-                header: 'Morris Charts', link: '/app/charts/morris',
+                header: 'Echarts Charts', link: '/app/charts/echarts',
               },
               {
-                header: 'Rickshaw Charts', link: '/app/charts/rickshaw',
-              },
-              {
-                header: 'Sparkline Charts', link: '/app/charts/sparkline',
-              },
-              {
-                header: 'Easy Pie Charts', link: '/app/charts/easy-pie',
+                header: 'Highcharts Charts', link: '/app/charts/highcharts',
               },
             ]}
           />
           <LinksGroup
             header="Grid"
             link="/app/grid"
+            iconElement={<Layout/>}
             isHeader
             iconName="flaticon-menu-4"
           />
@@ -276,7 +341,8 @@ class Sidebar extends React.Component {
             activeItem={this.props.activeItem}
             header="Tables"
             isHeader
-            iconName="flaticon-map-location"
+            iconElement={<Rows/>}
+            iconName="flaticon-equal-1"
             link="/app/tables"
             index="tables"
             childrenLinks={[
@@ -293,7 +359,8 @@ class Sidebar extends React.Component {
             activeItem={this.props.activeItem}
             header="Maps"
             isHeader
-            iconName="flaticon-equal-1"
+            iconElement={<Location/>}
+            iconName="flaticon-map-location"
             link="/app/maps"
             index="maps"
             childrenLinks={[
@@ -310,6 +377,7 @@ class Sidebar extends React.Component {
             activeItem={this.props.activeItem}
             header="Extra"
             isHeader
+            iconElement={<Fire/>}
             iconName="flaticon-star"
             link="/app/extra"
             index="extra"
@@ -321,7 +389,7 @@ class Sidebar extends React.Component {
                 header: 'Invoice', link: '/app/extra/invoice',
               },
               {
-                header: 'Login Page', link: '/login', onClick: this.doLogout,
+                header: 'Login Page', link: '/app/loginpage',
               },
               {
                 header: 'Error Page', link: '/error',
@@ -342,6 +410,7 @@ class Sidebar extends React.Component {
             activeItem={this.props.activeItem}
             header="Menu Levels"
             isHeader
+            iconElement={<Menu/>}
             iconName="flaticon-folder-10"
             link="/app/menu"
             index="menu"
@@ -389,27 +458,24 @@ class Sidebar extends React.Component {
         <h5 className={s.navTitle}>
           LABELS
           {/* eslint-disable-next-line */}
-          <a className={s.actionLink}>
-            <i className={`${s.glyphiconSm} glyphicon glyphicon-plus float-right`} />
-          </a>
         </h5>
         {/* eslint-disable */}
         <ul className={s.sidebarLabels}>
           <li>
             <a href="#">
-              <i className="fa fa-circle text-warning mr-2" />
+              <i className={`fa fa-circle me-2 ${s.labelRecent}`} />
               <span className={s.labelName}>My Recent</span>
             </a>
           </li>
           <li>
             <a href="#">
-              <i className="fa fa-circle text-gray mr-2" />
+              <i className={`fa fa-circle me-2 ${s.labelStarred}`} />
               <span className={s.labelName}>Starred</span>
             </a>
           </li>
           <li>
             <a href="#">
-              <i className="fa fa-circle text-danger mr-2" />
+              <i className={`fa fa-circle me-2 ${s.labelBackground}`} />
               <span className={s.labelName}>Background</span>
             </a>
           </li>
@@ -427,12 +493,13 @@ class Sidebar extends React.Component {
               toggle={() => { this.dismissAlert(alert.id); }}
             >
               <span>{alert.title}</span><br />
-              <Progress className={`${s.sidebarProgress} progress-xs mt-1`} color={alert.color} value={alert.value} />
+              <Progress className={`${s.sidebarProgress} sidebar-bottom-aler-${alert.color} progress-xs mt-1`} color={'unset'} value={alert.value} />
               <small>{alert.footer}</small>
             </Alert>,
           )}
         </div>
       </nav >
+      </div>
     );
   }
 }
@@ -443,6 +510,8 @@ function mapStateToProps(store) {
     sidebarStatic: store.navigation.sidebarStatic,
     alertsList: store.alerts.alertsList,
     activeItem: store.navigation.activeItem,
+    navbarType: store.navigation.navbarType,
+    sidebarColor: store.layout.sidebarColor,
   };
 }
 

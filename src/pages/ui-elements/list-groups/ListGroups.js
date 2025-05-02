@@ -9,38 +9,38 @@ import Widget from '../../../components/Widget';
 
 import './ListGroups.scss';
 
-const SortableItem = SortableElement(({ value }) => <li className="list-group-item">
+const SortableItem = SortableElement(({ value }) => <li className="list-group-item bg-widget-transparent">
   <i className="fa fa-sort" />
-  <button className="close flex-last ml-auto" data-dismiss="alert">&times;</button>
+  <button className="close flex-last mx-3" data-dismiss="alert">&times;</button>
   &nbsp;&nbsp;&nbsp; {value.id} &nbsp;&nbsp;&nbsp;
   {value.text}
 </li>);
 
 
 const SortableList = SortableContainer(({ items }) => (
-  <ul className="list-group list-group-sortable mt-xs">
-    {items.map((value, index) => (
-      <SortableItem key={`item-${index.toString()}`} index={index} value={value} />
+    <ul className="list-group list-group-sortable mt-xs">
+      {items.map((value, index) => (
+          <SortableItem key={`item-${index.toString()}`} index={index} value={value} />
       ))}
-  </ul>
-  ));
+    </ul>
+));
 
 const NestableItem = SortableElement(({ value }) => {
   if (value.children) {
     return (
-      <li className="dd-item">
-        <div className="dd-handle" data-id={value.id}> {value.text} </div>
-        <ol className="dd-list">
-          {value.children.map((child, index) => (
-            <NestableItem key={`nest-${index.toString()}`} index={index} value={child} />
-          ))}
-        </ol>
-      </li>);
+        <li className="dd-item">
+          <div className="dd-handle" data-id={value.id}> {value.text} </div>
+          <ol className="dd-list">
+            {value.children.map((child, index) => (
+                <NestableItem key={`nest-${index.toString()}`} index={index} value={child} />
+            ))}
+          </ol>
+        </li>);
   }
   return (
-    <li className="dd-item">
-      <div className="dd-handle" data-id={value.id}> {value.text} </div>
-    </li>
+      <li className="dd-item">
+        <div className="dd-handle" data-id={value.id}> {value.text} </div>
+      </li>
   );
 });
 
@@ -96,17 +96,13 @@ class ListGroups extends React.Component {
   render() {
     return (
       <div>
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">YOU ARE HERE</li>
-          <li className="breadcrumb-item active">UI List Groups</li>
-        </ol>
         <h1 className="page-title">Lists - <span className="fw-semi-bold">Sortable Groups</span>
         </h1>
         <Widget
           title={<h4> Grouped <span className="fw-semi-bold">Lists</span></h4>}
           close refresh settings
         >
-          <h3>Closest <span className="fw-semi-bold">Stars</span></h3>
+          <p>Closest <span className="fw-semi-bold">Stars</span></p>
           <p>
             Try to play around with this list. Are you ready to pass an exam on astronomy?
           </p>
@@ -125,10 +121,10 @@ class ListGroups extends React.Component {
           </p>
           <Row className="nestable">
             <Col md="6" xs="12" className="mb-xs">
-              <SortableTree
-                treeData={this.state.nestableFirstItems}
-                onChange={nestableFirstItems => this.setState({ nestableFirstItems })}
-              />
+                <SortableTree
+                    treeData={this.state.nestableFirstItems}
+                    onChange={nestableFirstItems => this.setState({ nestableFirstItems })}
+                />
             </Col>
             <Col md="6">
               <SortableTree

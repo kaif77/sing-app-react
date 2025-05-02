@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
   Alert,
 } from 'reactstrap';
 
@@ -64,19 +62,16 @@ class Email extends Component {
     } = this.state;
     return (
       <div>
-        <Breadcrumb>
-          <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-          <BreadcrumbItem active>Email</BreadcrumbItem>
-        </Breadcrumb>
-        <div className={s.pageTopLine}>
+        <div className="page-top-line">
           <h1 className="page-title">Email - <span className="fw-semi-bold">Inbox</span></h1>
           <Alert
             isOpen={isNotificationOpen}
-            color="success"
+            color="warning"
             toggle={() => this.closeNotification()}
             className={cx(s.alert, { [s.alertAfter]: alertAfter })}
+            type="warning"
           >
-            Hey! This is a <span className="fw-semi-bold">real app</span> with CRUD and Search functions. Have fun!
+            Hey! This is a <span className="fw-semi-bold">real app</span> with CRUD and Search functions.
           </Alert>
         </div>
         <div className={s.view}>

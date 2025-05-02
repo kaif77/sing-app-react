@@ -4,15 +4,18 @@ import {
   Col,
   Progress,
 } from 'reactstrap';
+import Slider from "react-slick";
 
 import Widget from '../../components/Widget';
-import LiveTile from './components/live-tile/LiveTile';
 import ChangesChart from './components/changes-chart/ChangesChart';
 import RealtimeTraffic from './components/realtime-traffic/RealtimeTraffic';
 import YearsMap from './components/years-map/YearsMap';
 import FlotCharts from './components/flot-charts/FlotCharts';
 import NasdaqSparkline from './components/nasdaq-sparkline-widget/nasdaqSparkline';
 import Skycon from '../../components/Skycon/Skycon';
+import { Input, InputGroup, Button } from 'reactstrap';
+
+import s from './WidgetsMetro.module.scss';
 import './Widgets.scss';
 
 import peopleA1 from '../../images/people/a1.jpg';
@@ -25,21 +28,32 @@ import img18 from '../../images/pictures/18.jpg';
 import img17 from '../../images/pictures/17.jpg';
 
 class Widgets extends React.Component {
-  componentDidMount() {
-
-  }
 
   render() {
+    let settings = {
+      dots: false,
+      infinite: true,
+      vertical: true,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      adaptiveHeight: true,
+      arrows: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      draggable: false,
+    };
+
     return (
       <div className="root">
+        <h1 className="page-title">Widgets - <span className="fw-semi-bold">Company Performance</span></h1>
         <Row>
-          <Col lg={3} md={6} xs={12}>
-            <Widget className="">
+          <Col xl={3} lg={4} md={6} xs={12}>
+            <Widget>
               <div className="clearfix">
                 <Row className="flex-nowrap">
                   <Col xs={3}>
                     <span className="widget-icon">
-                      <i className="glyphicon glyphicon-globe text-primary" />
+                      <i className="fi flaticon-like text-primary" />
                     </span>
                   </Col>
                   <Col xs="9">
@@ -60,20 +74,17 @@ class Widgets extends React.Component {
               </div>
             </Widget>
           </Col>
-          <Col lg={3} md={6} xs={12}>
-            <Widget className="">
+          <Col xl={3} lg={4} md={6}  xs={12}>
+            <Widget>
               <div className="clearfix">
                 <Row className="flex-nowrap">
                   <Col xs="3">
                     <span className="widget-icon">
-                      <i className="glyphicon glyphicon-user text-info" />
+                      <i className="fi flaticon-magic-wand text-danger" />
                     </span>
                   </Col>
-                  <Col xs="9">
-                    <LiveTile
-                      data-mode="carousel" data-speed="750" data-delay="3000"
-                      data-height="57"
-                    >
+                  <Col xs="9">   
+                    <Slider {...settings} className={`${s.hideOverflow} ${s.itemMinWidth}`}>
                       <div>
                         <h6 className="m-0">VISITS TODAY</h6>
                         <p className="h2 m-0 fw-normal">12,324</p>
@@ -82,54 +93,45 @@ class Widgets extends React.Component {
                         <h6 className="m-0">VISITS YESTERDAY</h6>
                         <p className="h2 m-0 fw-normal">11,885</p>
                       </div>
-                    </LiveTile>
+                    </Slider> 
                   </Col>
                 </Row>
                 <Row className="flex-nowrap">
                   <Col xs="6">
                     <h6 className="m-0">New Visitors</h6>
-                    <LiveTile
-                      data-mode="carousel" data-speed="750" data-delay="3000"
-                      data-height="25"
-                    >
+                    <Slider {...settings}  className={s.hideOverflow}>
                       <div>
                         <p className="value5">1,332</p>
                       </div>
                       <div>
                         <p className="value5">20.1%</p>
                       </div>
-                    </LiveTile>
+                    </Slider>
                   </Col>
                   <Col xs="6">
                     <h6 className="m-0">Bounce Rate</h6>
-                    <LiveTile
-                      data-mode="carousel" data-speed="750" data-delay="3000"
-                      data-height="26"
-                    >
+                    <Slider {...settings}  className={s.hideOverflow}>
                       <div>
                         <p className="value5">217</p>
                       </div>
                       <div>
                         <p className="value5">2.3%</p>
                       </div>
-                    </LiveTile>
+                    </Slider>
                   </Col>
                 </Row>
               </div>
             </Widget>
           </Col>
-          <Col lg={3} md={6} xs={12}>
-            <Widget className="">
+          <Col xl={3} lg={4}  md={6} xs={12}>
+            <Widget>
               <div className="clearfix">
-                <LiveTile
-                  data-mode="fade" data-speed="750" data-delay="4000"
-                  data-height="104"
-                >
-                  <div className="bg-white text-gray">
+                <Slider {...settings}  className={`${s.hideOverflow} ${s.itemMinWidth}`}>
+                  <div>
                     <Row className="flex-nowrap">
                       <Col xs={3}>
                         <span className="widget-icon">
-                          <i className="glyphicon glyphicon-globe" />
+                          <i className="fi flaticon-notebook-4 text-info" />
                         </span>
                       </Col>
                       <Col xs="9">
@@ -148,11 +150,11 @@ class Widgets extends React.Component {
                       </Col>
                     </Row>
                   </div>
-                  <div className="text-gray">
+                  <div>
                     <Row className="flex-nowrap">
                       <Col xs={3}>
                         <span className="widget-icon">
-                          <i className="glyphicon glyphicon-certificate" />
+                          <i className="fi flaticon-shuffle text-info" />
                         </span>
                       </Col>
                       <Col xs={9}>
@@ -171,17 +173,17 @@ class Widgets extends React.Component {
                       </Col>
                     </Row>
                   </div>
-                </LiveTile>
+                </Slider>
               </div>
             </Widget>
           </Col>
-          <Col lg={3} md={6} xs={12}>
-            <Widget className="">
+          <Col xl={3} lg={4}  md={6} xs={12}>
+            <Widget>
               <div className="clearfix">
                 <Row className="flex-nowrap">
                   <Col xs={3}>
                     <span className="widget-icon">
-                      <i className="glyphicon glyphicon-usd text-success" />
+                      <i className="fi flaticon-diamond text-success" />
                     </span>
                   </Col>
                   <Col xs={9}>
@@ -206,17 +208,17 @@ class Widgets extends React.Component {
         <FlotCharts />
         <Row>
           <Col lg={4} xs={12}>
-            <Widget refresh close bodyClass="mt-0">
-              <div className="widget-top-overflow widget-padding-md clearfix bg-warning text-white">
-                <h3 className="mt-lg mb-lg">Sing - <span className="fw-semi-bold">Next Generation</span> Admin
+            <Widget refresh close bodyClass="mt-0" >
+              <div className="widget-top-overflow widget-padding-md clearfix bg-info text-white">
+                <h3 className="mt-lg mb-lg">Light Blue - <span className="fw-semi-bold">Next Generation</span> Admin
                   Dashboard
                   Template</h3>
                 <ul className="tags text-white pull-right">
-                  <li><button className="btn-link">features</button></li>
+                  <li><span className="badge rounded-pill bg-light text-dark px-3 py-1">features</span></li>
                 </ul>
               </div>
               <div className="post-user mt-negative-lg">
-                <span className="thumb-lg pull-left mr mt-n-sm">
+                <span className="thumb-lg pull-left me-2 mt-n-sm">
                   <img className="rounded-circle" src={peopleA4} alt="..." />
                 </span>
                 <h6 className="m-b-1 fw-normal text-white">Jeremy &nbsp;
@@ -232,7 +234,7 @@ class Widgets extends React.Component {
                 and listen. Colors, sounds,
                 thoughts, ideas.
               </p>
-              <footer className="bg-body-light">
+              <footer className="bg-widget-transparent">
                 <ul className="post-links">
                   <li><button className="btn-link">1 hour</button></li>
                   <li><button className="btn-link"><span className="text-danger"><i className="fa fa-heart" /> Like</span></button></li>
@@ -240,7 +242,7 @@ class Widgets extends React.Component {
                 </ul>
                 <ul className="post-comments mb-0 mt-2">
                   <li>
-                    <span className="thumb-xs avatar pull-left mr-sm">
+                    <span className="thumb-xs avatar pull-left me-2">
                       <img className="rounded-circle" src={peopleA1} alt="..." />
                     </span>
                     <div className="comment-body">
@@ -251,7 +253,7 @@ class Widgets extends React.Component {
                     </div>
                   </li>
                   <li>
-                    <span className="thumb-xs avatar pull-left mr-sm">
+                    <span className="thumb-xs avatar pull-left me-sm">
                       <img className="rounded-circle" src={avatar} alt="..." />
                     </span>
                     <div className="comment-body">
@@ -271,12 +273,11 @@ class Widgets extends React.Component {
                 <div className="widget-top-overflow text-white">
                   <img src={img17} alt="..." />
                   <ul className="tags text-white pull-right">
-                    <li><button className="btn-link">design</button></li>
-                    <li><button className="btn-link">white</button></li>
+                    <li><span className="badge rounded-pill bg-light text-dark px-3 py-1">design</span></li>
                   </ul>
                 </div>
                 <div className="post-user mt-sm">
-                  <span className="thumb pull-left mr mt-n-sm">
+                  <span className="thumb pull-left me-2 mt-n-sm">
                     <img className="rounded-circle" src={peopleA6} alt="..." />
                   </span>
                   <h6 className="mb-xs mt"><span className="fw-semi-bold">Maryna</span> Nilson</h6>
@@ -290,7 +291,7 @@ class Widgets extends React.Component {
                   and listen. Colors, sounds,
                   thoughts, ideas. </p>
               </div>
-              <footer className="bg-body-light">
+              <footer className="bg-widget-transparent">
                 <ul className="post-links no-separator">
                   <li><button className="btn-link"><span className="text-danger"><i className="fa fa-heart" /> 427</span></button></li>
                   <li><button className="btn-link"><i className="glyphicon glyphicon-comment" /> 98</button></li>
@@ -302,7 +303,7 @@ class Widgets extends React.Component {
             <Widget refresh close>
               <div>
                 <div className="post-user mt-n-xs">
-                  <span className="thumb pull-left mr mt-n-sm">
+                  <span className="thumb pull-left me-2 mt-n-sm">
                     <img className="rounded-circle" src={peopleA2} alt="..." />
                   </span>
                   <h6 className="mb-xs mt-xs">Jess <span className="fw-semi-bold">@jessica</span></h6>
@@ -312,11 +313,11 @@ class Widgets extends React.Component {
                   </p>
                 </div>
                 <div className="widget-middle-overflow widget-padding-md clearfix bg-danger text-white">
-                  <h3 className="mt-lg mb-lg">Sing - <span className="fw-semi-bold">Next Generation</span> Admin
+                  <h3 className="mt-lg mb-lg">Light Blue - <span className="fw-semi-bold">Next Generation</span> Admin
                     Dashboard
                     Template</h3>
                   <ul className="tags text-white pull-right">
-                    <li><button className="btn-link">design</button></li>
+                    <li><span className="badge rounded-pill bg-light text-dark px-3 py-1">design</span></li>
                   </ul>
                 </div>
                 <p className="text-light fs-mini mt-sm">Lots of cool stuff is happening around you. Just calm down for
@@ -324,7 +325,7 @@ class Widgets extends React.Component {
                   sec and listen. Colors, sounds,
                   thoughts, ideas. </p>
               </div>
-              <footer className="bg-body-light">
+              <footer className="bg-widget-transparent">
                 <ul className="post-links">
                   <li><button className="btn-link">1 hour</button></li>
                   <li><button className="btn-link"><span className="text-danger"><i className="fa fa-heart" /> Like</span></button></li>
@@ -343,7 +344,7 @@ class Widgets extends React.Component {
                   <span className="fw-normal">Sunnyvale</span>, CA
                 </h4>
                 <div className="info text-right">
-                  <i className="fa fa-map-marker h1 m-0 mr-xs" />
+                  <i className="fa fa-map-marker h1 m-0 me-xs" />
                   <h6 className="m-0 mt-xs">FLORIDA, USA</h6>
                   <p className="fs-sm">9:41 am</p>
                 </div>
@@ -394,21 +395,21 @@ class Widgets extends React.Component {
                       <h6 className="text-white fw-normal m-t-1">FRIDAY</h6>
                     </div>
                     <div className="col-7">
-                      <p className="value0 text-danger mt-n-xs mr-n-xs">
+                      <p className="value0 text-danger mt-n-xs me-n-xs">
                         33&deg;
                       </p>
                       <p className="mt-n-sm m-b-0 fw-normal fs-sm text-muted">WINDY</p>
                       <div className="row mt-n-xs mb-xs">
                         <div className="col-6 p-0">
                           <Skycon icon="WIND" color="#999" width="20" height="20" />
-                          <div className="d-inline-block ml-1">
+                          <div className="d-inline-block ms-1">
                             <p className="value6">4</p>
                             <p className="fs-sm m-0 mt-n-xs text-muted fw-normal">MPS</p>
                           </div>
                         </div>
                         <div className="col-6 p-0">
                           <Skycon icon="RAIN" color="#999" width="20" height="20" />
-                          <div className="d-inline-block ml-1">
+                          <div className="d-inline-block ms-1">
                             <p className="value6">52</p>
                             <p className="fs-sm m-0 mt-n-xs text-muted fw-normal">MM</p>
                           </div>
@@ -422,13 +423,13 @@ class Widgets extends React.Component {
                 <Widget className="p-0 text-center">
                   <div className="row m-0">
                     <div className="col-7 bg-success btlr bblr">
-                      <p className="value0 text-white mt-sm mr-n-xs">
+                      <p className="value0 text-white mt-sm me-n-xs">
                         20&deg;
                       </p>
                       <p className="text-white fw-normal d-inline-block mb">SUNDAY</p>
                     </div>
                     <div className="col-5">
-                      <Skycon className="mt-3" icon="PARTLY_CLOUDY_DAY" color="#64bd63" width="60" height="60" />
+                      <Skycon className="mt-3" icon="PARTLY_CLOUDY_DAY" color="#21AE8C" width="60" height="60" />
                       <p className="fw-normal fs-sm text-muted">WINDY</p>
                     </div>
                   </div>
@@ -451,7 +452,7 @@ class Widgets extends React.Component {
                 </Widget>
               </Col>
               <Col md={6} xs={12}>
-                <Widget className="widget-sm bg-success text-white">
+                <Widget className="bg-success text-white widget-sm">
                   <p className="mb-xs"><i className="fa fa-comments fa-2x" /></p>
                   <h5>
                     Lots of <span className="fw-semi-bold">possibilities</span> to customize your
@@ -472,7 +473,7 @@ class Widgets extends React.Component {
             </Row>
             <Row>
               <Col md={6} xs={12}>
-                <Widget className="widget-sm bg-primary text-white">
+                <Widget className="bg-primary text-white widget-sm">
                   <p className="mb-xs"><i className="fa fa-arrow-circle-up fa-3x opacity-50" /></p>
                   <p className="mb text-light">
                     <time>10 June</time>
@@ -488,32 +489,31 @@ class Widgets extends React.Component {
                 </Widget>
               </Col>
               <Col md={6} xs={12}>
-                <Widget
-                  className="widget-sm"
+                <Widget className="widget-sm"
                   title={<h6>Server <span className="fw-semi-bold">Overview</span></h6>}
                 >
                   <div className="clearfix fs-mini">
                     <span className="pull-right m-0 fw-semi-bold">CPU</span>
                     <span className="fs-mini">60% / 37°C / 3.3 Ghz</span>
                   </div>
-                  <Progress color="bg-gray-lighter" className="progress-xs" value={60} />
+                  <Progress color="bg-widget-transparent-lighter" className="progress-xs" value={60} />
                   <div className="clearfix fs-mini mt">
                     <span className="pull-right m-0 fw-semi-bold">Mem</span>
                     <span className="fs-mini">29% / 4GB (16 GB)</span>
                   </div>
-                  <Progress color="warning" className="bg-gray-lighter progress-xs" value={29} />
+                  <Progress color="warning" className="bg-widget-transparent-lighter progress-xs" value={29} />
                   <div className="clearfix fs-mini mt">
                     <span className="pull-right m-0 fw-semi-bold">LAN</span>
                     <span className="fs-mini">6 Mb/s <i className="fa fa-caret-down" /> &nbsp; 3 Mb/s <i
                       className="fa fa-caret-up"
                     /></span>
                   </div>
-                  <Progress color="danger" className="bg-gray-lighter progress-xs" value={48} />
+                  <Progress color="danger" className="bg-widget-transparent-lighter progress-xs" value={48} />
                   <div className="clearfix fs-mini mt">
                     <span className="pull-right m-0 fw-semi-bold">Access</span>
                     <span className="fs-mini">17 Mb/s <i className="fa fa-caret-up" /> &nbsp; (+18%)</span>
                   </div>
-                  <Progress color="success" className="bg-gray-lighter progress-xs" value={64} />
+                  <Progress color="success" className="bg-widget-transparent-lighter progress-xs" value={64} />
                 </Widget>
               </Col>
             </Row>
@@ -584,156 +584,149 @@ class Widgets extends React.Component {
                   </ul>
                 </div>
               </div>
-              <footer className="bg-body-light bt">
-                <div className="input-group input-group-sm">
-                  <input type="text" className="form-control" placeholder="Your message" />
-                  <span className="input-group-btn">
-                    <button type="submit" className="btn btn-default">
-              Send
-            </button>
-                  </span>
-                </div>
+              <footer className="bg-widget-transparent bt">
+                  <InputGroup size="sm">
+                      <Input placeholder="Your message" />
+                      <Button color="default">Send</Button>
+                  </InputGroup>
               </footer>
             </Widget>
           </Col>
           <Col lg={4} xs={12}>
-            <Widget className="bg-gray-dark text-white">
+            <Widget>
               <RealtimeTraffic />
             </Widget>
           </Col>
         </Row>
 
         <Row>
-          <Col lg={3} xs={12}>
-            <Widget className="widget-padding-lg">
+          <Col xl={3} lg={4} xs={12}>
+            <Widget className="widget-padding-md">
               <div className="clearfix">
-                <LiveTile
-                  data-mode="carousel" data-speed="750" data-delay="3000"
-                  data-height="313"
-                >
-                  <div>
+                <Slider {...settings} className={s.hideOverflow}>
+                  <div className={s.slideWrap}>
                     <h3>Basic & <span className="fw-semi-bold">Advanced</span> Features</h3>
-                    <p className="value4 mt-lg">All you need in one app</p>
+                    <p className={`value4 mt-lg ${s.smallSite}`}>All you need in one app</p>
                     <div className="h5 mt-lg mb-lg">
                       <i className="fa fa-quote-left opacity-50" />
                       &nbsp;That&apos;s awesome!  &nbsp;
                       <i className="fa fa-quote-right opacity-50" />
                     </div>
-                    <div className="widget-footer-bottom">
-                      <p>Attention to what&apos;s really important</p>
-                      <button className="btn btn-info btn-block mt">Order Now!</button>
+                    <div>
+                      <p className={s.positionDescriptionText}>Attention to what&apos;s really important</p>
+                      <button className={`${s.positionElementBottom} btn btn-info btn-block mt`}>Order Now!</button>
                     </div>
                   </div>
-                  <div>
+                  <div className={s.slideWrap}>
                     <h3>Beautiful <span className="fw-semi-bold">Thing</span></h3>
-                    <p className="value4 mt-lg">Life-time package support</p>
+                    <p className={`value4 mt-lg ${s.smallSite}`}>Life-time package support</p>
                     <div className="h5 mt-lg mb-lg">
                       <i className="fa fa-quote-left opacity-50" />
                       &nbsp;That&apos;s awesome!  &nbsp;
                       <i className="fa fa-quote-right opacity-50" />
                     </div>
-                    <div className="widget-footer-bottom">
-                      <p>Attention to what&apos;s really important</p>
-                      <button className="btn btn-inverse btn-block mt"><span
+                    <div>
+                      <p className={s.positionDescriptionText}>Attention to what&apos;s really important</p>
+                      <button className={`${s.positionElementBottom} btn btn-inverse btn-block mt`} ><span
                         className="fw-semi-bold text-warning"
                       >Ready?</span>
                       </button>
                     </div>
                   </div>
-                </LiveTile>
+                </Slider>
               </div>
             </Widget>
           </Col>
 
-          <Col lg={3} xs={12}>
+          <Col xl={3} lg={4} xs={12}>
             <Widget className="widget-chart-changes" close refresh bodyClass="mt-0">
               <ChangesChart />
             </Widget>
           </Col>
 
-          <Col lg={3} xs={12}>
-            <Widget className="widget-padding-lg bg-primary text-white">
+          <Col xl={3} lg={4} xs={12}>
+            <Widget className="widget-padding-md bg-info text-white">
               <div className="clearfix">
-                <LiveTile data-mode="carousel" data-speed="300" data-delay="3000" data-height="313">
-                  <div>
-                    <p className="h4 mt-xs">
+              <Slider {...settings} className={s.hideOverflow}>
+                  <div className={s.slideWrap}>
+                    <p className="h4">
                       <i className="fa fa-quote-left opacity-50" />
                       &nbsp;Thanks for the awesome support. That&apos;s awesome!&nbsp;
                       <i className="fa fa-quote-right opacity-50" />
                     </p>
-                    <div className="widget-footer-bottom">
-                      <span className="thumb pull-left mr">
+                    <div className={`${s.positionElementBottom} ${s.mobileAdjustment}`}>
+                      <span className="thumb pull-left me-2">
                         <img className="rounded-circle" src={peopleA4} alt="..." />
                       </span>
-                      <h4 className="m-0 mb-xs"><span className="fw-semi-bold">Miha</span> Koshir</h4>
-                      <p className="text-light">@miha</p>
+                      <h4 className={`${s.wideName} m-0`}><span className="fw-semi-bold">Miha </span>Koshir</h4>
+                      <p className="text-light m-0">@miha</p>
                     </div>
                   </div>
-                  <div>
-                    <div className="clearfix mt-xs">
-                      <span className="thumb pull-left mr">
+                  <div  className={s.slideWrap}> 
+                    <div className="clearfix">
+                      <span className="thumb pull-left me-2">
                         <img className="rounded-circle" src={peopleA3} alt="..." />
                       </span>
-                      <h4 className="m-0 mb-xs"><span className="fw-semi-bold">Maryna</span> Ess</h4>
-                      <p className="text-light">@ess</p>
+                      <h4 className="m-0"><span className="fw-semi-bold">Maryna</span> Ess</h4>
+                      <p className="text-light m-0">@ess</p>
                     </div>
-                    <div className="widget-footer-bottom">
-                      <p className="h4">
+                    <div>
+                      <p className={`h4 ${s.positionElementBottom}`}>
                         <i className="fa fa-quote-left opacity-50" />
                         &nbsp;Could have never imagined it would be so great!&nbsp;
                         <i className="fa fa-quote-right opacity-50" />
                       </p>
                     </div>
                   </div>
-                </LiveTile>
+                </Slider>
               </div>
             </Widget>
+            
           </Col>
 
-          <Col lg={3} xs={12} className="col-lg-3 col-12">
-            <LiveTile
-              data-mode="flip" data-direction="horizontal"
-              data-speed="600" data-delay="3000" data-height="373" data-play-onhover="true"
-            >
-              <div>
-                <Widget
-                  className="widget-padding-lg widget-md bg-gray-dark text-white"
-                  bodyClass="widget-body-container"
-                >
-                  <div className="text-center">
-                    <i className="fa fa-child text-warning fa-5x" />
-                  </div>
-                  <h3 className="fw-normal">Sing Web App</h3>
-                  <div className="widget-footer-bottom">
-                    <div className="mb-sm">Cutting-edge tech and design delivered</div>
-                    <p>
-                      <button className="btn btn-default btn-block">Hover over me!</button>
-                    </p>
-                  </div>
-                </Widget>
-              </div>
-              <div>
-                <Widget className="widget-padding-lg widget-md" bodyClass="widget-body-container">
+          <Col xl={3} lg={4} xs={12} className="col-lg-3 col-12">
+              <div className={s.flipCard}>
+                <div className={s.flipCardInner}>
+                  <div className={s.flipCardFront}>
+                    <Widget
+                      fullscreen={false}
+                      className={`widget-padding-md bg-inverse text-white ${s.slideWrap}`}
+                      bodyClass="widget-body-container"
+                    >
+                      <div className="text-center">
+                        <i className="fa fa-child text-white fa-5x" />
+                      </div>
+                      <h3 className="fw-normal">Light Blue Web App</h3>
+                      <div className={s.postitionGroupElements}>
+                        <div className="mb-sm">Cutting-edge tech and design delivered</div>
+                        <p>
+                          <button className="btn btn-default btn-block">Hover over me!</button>
+                        </p>
+                      </div>
+                    </Widget>
+                </div>
+              
+              <div className={s.flipCardBack}>
+                <Widget fullscreen={false} className={`widget-padding-md ${s.slideWrap}`}  bodyClass="widget-body-container">
                   <div className="text-center">
                     <i className="fa fa-globe text-primary fa-5x" />
                   </div>
                   <h3 className="fw-normal">Join The Web Now!</h3>
-                  <div className="widget-footer-bottom">
+                  <div className={s.postitionGroupElements}>
                     <div className="mb-sm">Cutting-edge tech and design delivered</div>
                     <p>
                       <button className="btn btn-gray btn-block">Join now!</button>
                     </p>
                   </div>
                 </Widget>
+                </div>
+                </div>
               </div>
-            </LiveTile>
           </Col>
         </Row>
-
       </div>
     );
   }
 }
-
 
 export default Widgets;

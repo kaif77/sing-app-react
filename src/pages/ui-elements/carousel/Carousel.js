@@ -2,27 +2,21 @@ import React from 'react';
 import {
   Row,
   Col,
-  Breadcrumb,
-  BreadcrumbItem,
   UncontrolledCarousel,
 } from 'reactstrap';
 
-import firstSlide from '../../../images/slides/1.jpg';
-import secondSlide from '../../../images/slides/2.jpg';
-import thirdSlide from '../../../images/slides/3.jpg';
+import firstSlide from '../../../images/slides/slide1.jpg';
+import secondSlide from '../../../images/slides/slide2.jpg';
+import thirdSlide from '../../../images/slides/slide3.jpg';
 
 const carouselItems = [
-  { src: firstSlide, caption: '' },
-  { src: secondSlide, caption: '' },
-  { src: thirdSlide, caption: '' },
+  { src: firstSlide, caption: '', key: 1, },
+  { src: secondSlide, caption: '', key: 2, },
+  { src: thirdSlide, caption: '', key: 3, },
 ];
 
 const Carousel = () => (
   <div>
-    <Breadcrumb>
-      <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-      <BreadcrumbItem active>UI Carousel</BreadcrumbItem>
-    </Breadcrumb>
     <p>
       The carousel is a slideshow for cycling through a series of content, built with
       CSS 3D transforms and a bit of JavaScript. It works with a series of images, text,
@@ -30,7 +24,7 @@ const Carousel = () => (
     </p>
     <Row>
       <Col>
-        <UncontrolledCarousel captionTex={null} items={carouselItems} />
+        <UncontrolledCarousel items={carouselItems} />
       </Col>
     </Row>
   </div>

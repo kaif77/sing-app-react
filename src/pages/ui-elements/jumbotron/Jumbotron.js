@@ -2,28 +2,20 @@ import React from 'react';
 import {
   Row,
   Col,
-  Breadcrumb,
-  BreadcrumbItem,
   Button,
-  Jumbotron,
-  Container,
 } from 'reactstrap';
 
 const Jumb = () => (
   <div>
-    <Breadcrumb>
-      <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-      <BreadcrumbItem active>UI Jumbotron</BreadcrumbItem>
-    </Breadcrumb>
-    <Jumbotron fluid>
-      <Container fluid>
+    <div className="jumbotron">
+      <div>
         <h1 className="display-3">Fluid jumbotron</h1>
         <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-      </Container>
-    </Jumbotron>
+      </div>
+    </div>
     <Row>
       <Col xs={12} md={8}>
-        <Jumbotron>
+        <div className="jumbotron">
           <h1 className="display-3">Hello, world!</h1>
           <p className="lead">This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p>
           <hr className="my-2" />
@@ -31,7 +23,7 @@ const Jumb = () => (
           <p className="lead">
             <Button color="primary">Learn More</Button>
           </p>
-        </Jumbotron>
+        </div>
       </Col>
     </Row>
   </div>

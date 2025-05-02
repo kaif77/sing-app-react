@@ -3,8 +3,6 @@ import cx from 'classnames';
 import {
   Row,
   Col,
-  Breadcrumb,
-  BreadcrumbItem,
   Alert,
 } from 'reactstrap';
 
@@ -30,7 +28,7 @@ class Alerts extends Component {
     }, {
       id: 'al-4',
       type: 'danger',
-      msg: '<span class="fw-semi-bold">Danger:</span> Change this and that and try again. <a class="btn btn-default btn-xs float-right mr" href="#">Ignore</a> <a class="btn btn-danger btn-xs float-right mr-xs" href="#">Take this action</a>',
+      msg: '<span class="fw-semi-bold">Danger:</span> Change this and that and try again. <a class="btn btn-default btn-xs float-end ms-1 me-4" href="#">Ignore</a> <a class="btn btn-danger btn-xs float-end me-1" href="#">Take this action</a>',
       visible: [true, true, true],
     }],
   }
@@ -47,13 +45,9 @@ class Alerts extends Component {
 
     return (
       <div>
-        <Breadcrumb>
-          <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-          <BreadcrumbItem active>UI Alerts</BreadcrumbItem>
-        </Breadcrumb>
         <h1 className="page-title">Alerts</h1>
         <Row>
-          <Col xs={12} md={8}>
+          <Col xs={12} md={6}>
             <Widget
               title={<h5>Alert <span className="fw-semi-bold">Messages</span></h5>}
               close collapse
@@ -67,7 +61,7 @@ class Alerts extends Component {
               </Alert>)}
             </Widget>
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} md={6}>
             <Widget
               title={<h5>Transparent <span className="fw-semi-bold">Alerts</span></h5>}
               close collapse
@@ -82,7 +76,7 @@ class Alerts extends Component {
               </Alert>)}
             </Widget>
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} md={6}>
             <Widget
               title={<h5>Rounded <span className="fw-semi-bold">Alerts</span></h5>}
               close collapse
@@ -97,7 +91,7 @@ class Alerts extends Component {
               </Alert>)}
             </Widget>
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} md={6}>
             <Widget
               title={<h5>Additional <span className="fw-semi-bold">Content</span></h5>}
               close collapse

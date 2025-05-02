@@ -31,6 +31,7 @@ class Notifications extends React.Component {
 
   loadNotifications() {
     this.setState({
+      notificationsTabSelected: 1,
       isLoad: true,
     });
 
@@ -75,7 +76,7 @@ class Notifications extends React.Component {
         <footer className={[s.cardFooter, 'text-sm', 'card-footer'].join(' ')}>
           <Button
             color="link"
-            className={classnames({ disabled: this.state.isLoad }, s.btnNotificationsReload, 'btn-xs', 'float-right', 'py-0')}
+            className={classnames({ disabled: this.state.isLoad }, s.btnNotificationsReload, 'btn-xs', 'float-end', 'py-0')}
             onClick={() => this.loadNotifications()}
             id="load-notifications-btn"
           >

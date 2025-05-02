@@ -2,8 +2,6 @@ import React from 'react';
 import {
   Row,
   Col,
-  Breadcrumb,
-  BreadcrumbItem,
   Button,
   Modal,
   ModalHeader,
@@ -33,10 +31,6 @@ class ModalExample extends React.Component {
     const { demo, scrollingLong, large, small, launch } = this.state;
     return (
       <div>
-        <Breadcrumb>
-          <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-          <BreadcrumbItem active>UI Modal</BreadcrumbItem>
-        </Breadcrumb>
         <h1 className="page-title">Modal - <span className="fw-semi-bold">Examples</span></h1>
         <Row>
           <Col xs={12} md={6}>
@@ -49,7 +43,7 @@ class ModalExample extends React.Component {
                 Toggle a working modal demo by clicking the button below. It
                 will slide down and fade in from the top of the page.
               </p>
-              <Button className="mr-sm" color="primary" onClick={() => this.toggle('demo')}>Demo</Button>
+              <Button className="me-2" color="primary" onClick={() => this.toggle('demo')}>Demo</Button>
               <Button color="primary" onClick={() => this.toggle('scrollingLong')}>Scrolling long content</Button>
             </Widget>
             <Widget
@@ -61,7 +55,7 @@ class ModalExample extends React.Component {
               classes to be placed on a .modal-dialog. These sizes kick in at certain
               breakpoints to avoid horizontal scrollbars on narrower viewports.
               </p>
-              <Button className="mr-sm" color="primary" onClick={() => this.toggle('large')}>Large modal</Button>
+              <Button className="me-2" color="primary" onClick={() => this.toggle('large')}>Large modal</Button>
               <Button color="primary" onClick={() => this.toggle('small')}>Small modal</Button>
             </Widget>
           </Col>
@@ -83,21 +77,21 @@ class ModalExample extends React.Component {
                   <code className="text-info">{'    <Col md={4}>\n'}</code>
                   <code>{'      .col-md-4\n'}</code>
                   <code className="text-info">{'    </Col>\n'}</code>
-                  <code className="text-info">{'    <Col md={4} className="ml-auto">\n'}</code>
-                  <code>{'      .col-md-4 .ml-auto\n'}</code>
+                  <code className="text-info">{'    <Col md={4} className="ms-auto">\n'}</code>
+                  <code>{'      .col-md-4 .ms-auto\n'}</code>
                   <code className="text-info">{'    </Col>\n'}</code>
                   <code className="text-success">{'  </Row>\n'}</code>
                   <code className="text-success">{'  <Row>\n'}</code>
-                  <code className="text-info">{'    <Col md={3} className="ml-auto">\n'}</code>
-                  <code>{'      .col-md-3 .ml-auto\n'}</code>
+                  <code className="text-info">{'    <Col md={3} className="ms-auto">\n'}</code>
+                  <code>{'      .col-md-3 .ms-auto\n'}</code>
                   <code className="text-info">{'    </Col>\n'}</code>
-                  <code className="text-info">{'    <Col md={4} className="ml-auto">\n'}</code>
-                  <code>{'      .col-md-4 .ml-auto\n'}</code>
+                  <code className="text-info">{'    <Col md={4} className="ms-auto">\n'}</code>
+                  <code>{'      .col-md-4 .ms-auto\n'}</code>
                   <code className="text-info">{'    </Col>\n'}</code>
                   <code className="text-success">{'  </Row>\n'}</code>
                   <code className="text-success">{'  <Row>\n'}</code>
-                  <code className="text-info">{'    <Col md={6} className="ml-auto">\n'}</code>
-                  <code>{'      .col-md-6 .ml-auto\n'}</code>
+                  <code className="text-info">{'    <Col md={6} className="ms-auto">\n'}</code>
+                  <code>{'      .col-md-6 .ms-auto\n'}</code>
                   <code className="text-info">{'    </Col>\n'}</code>
                   <code className="text-success">{'  </Row>\n'}</code>
                   <code className="text-danger">{'</Container>'}</code>
@@ -114,7 +108,7 @@ class ModalExample extends React.Component {
             ...
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={() => this.toggle('demo')}>Close</Button>
+            <Button color="default" onClick={() => this.toggle('demo')}>Close</Button>
             <Button color="primary">Save changes</Button>
           </ModalFooter>
         </Modal>
@@ -174,7 +168,7 @@ class ModalExample extends React.Component {
             </p>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={() => this.toggle('scrollingLong')}>Close</Button>
+            <Button color="default" onClick={() => this.toggle('scrollingLong')}>Close</Button>
             <Button color="primary">Save changes</Button>
           </ModalFooter>
         </Modal>
@@ -187,7 +181,7 @@ class ModalExample extends React.Component {
             cupiditate odio vitae? Eligendi nisi consequuntur vero tenetur nemo!
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={() => this.toggle('large')}>Close</Button>
+            <Button color="default" onClick={() => this.toggle('large')}>Close</Button>
             <Button color="primary">Save changes</Button>
           </ModalFooter>
         </Modal>
@@ -200,7 +194,7 @@ class ModalExample extends React.Component {
             cupiditate odio vitae? Eligendi nisi consequuntur vero tenetur nemo!
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={() => this.toggle('small')}>Close</Button>
+            <Button color="default" onClick={() => this.toggle('small')}>Close</Button>
             <Button color="primary">Save changes</Button>
           </ModalFooter>
         </Modal>
@@ -211,19 +205,19 @@ class ModalExample extends React.Component {
             <Container fluid>
               <Row>
                 <Col md={4}><div className="h-100 w-100 bg-primary p-2">.col-md-4</div></Col>
-                <Col md={4} className="ml-auto"><div className="h-100 w-100 bg-primary p-2">.col-md-4 .ml-auto</div></Col>
+                <Col md={4} className="ms-auto"><div className="h-100 w-100 bg-primary p-2">.col-md-4 .ms-auto</div></Col>
               </Row>
               <Row className="mt-sm">
-                <Col md={3} className="ml-auto"><div className="h-100 w-100 bg-primary p-2">.col-md-3 .ml-auto</div></Col>
-                <Col md={4} className="ml-auto"><div className="h-100 w-100 bg-primary p-2">.col-md-4 .ml-auto</div></Col>
+                <Col md={3} className="ms-auto"><div className="h-100 w-100 bg-primary p-2">.col-md-3 .ms-auto</div></Col>
+                <Col md={4} className="ms-auto"><div className="h-100 w-100 bg-primary p-2">.col-md-4 .ms-auto</div></Col>
               </Row>
               <Row className="mt-sm">
-                <Col md={6} className="ml-auto"><div className="h-100 w-100 bg-primary p-2">.col-md-6 .ml-auto</div></Col>
+                <Col md={6} className="ms-auto"><div className="h-100 w-100 bg-primary p-2">.col-md-6 .ms-auto</div></Col>
               </Row>
             </Container>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={() => this.toggle('launch')}>Close</Button>
+            <Button color="default" onClick={() => this.toggle('launch')}>Close</Button>
             <Button color="primary">Save changes</Button>
           </ModalFooter>
         </Modal>

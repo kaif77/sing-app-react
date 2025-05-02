@@ -2,8 +2,6 @@ import React from 'react';
 import {
   Row,
   Col,
-  Breadcrumb,
-  BreadcrumbItem,
   Progress,
 } from 'reactstrap';
 
@@ -11,10 +9,6 @@ import Widget from '../../../components/Widget';
 
 const ProgressExamples = () => (
   <div>
-    <Breadcrumb>
-      <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-      <BreadcrumbItem active>UI Progress</BreadcrumbItem>
-    </Breadcrumb>
     <h1 className="page-title">Progress</h1>
     <Row>
       <Col xs={12} md={6}>
@@ -35,7 +29,7 @@ const ProgressExamples = () => (
       <Col xs={12} md={6}>
         <Widget
           title={<h5>Backgrounds</h5>}
-          close collaple
+          close collapse
         >
           <p>
             Use background utility classes to change the appearance of
@@ -57,7 +51,7 @@ const ProgressExamples = () => (
           </p>
           <Progress className="mb-sm" value="25">25%</Progress>
           <Progress className="mb-sm" value="100" color="danger">Something was wrong!</Progress>
-          <Progress value="100" color="success">Complited!</Progress>
+          <Progress value="100" color="success">Completed!</Progress>
         </Widget>
       </Col>
       <Col xs={12} md={6}>
@@ -69,9 +63,9 @@ const ProgressExamples = () => (
           We only set a height value on the <code>&lt;Progress&gt;</code>, so if you change that value the inner
           bar will automatically resize accordingly. Also <code>.progress-sm</code> is available.
           </p>
-          <Progress className="progress-sm mb-sm" value="25" color="dark">25%</Progress>
-          <Progress className="mb-sm" value="50" color="gray">50%</Progress>
-          <Progress value="75" color="secondary" style={{ height: '30px' }}>75%</Progress>
+          <Progress className="progress-sm mb-sm" value="25" color="inverse">25%</Progress>
+          <Progress className="mb-sm" value="50" color="inverse">50%</Progress>
+          <Progress value="75" color="inverse" style={{ height: '30px' }}>75%</Progress>
         </Widget>
       </Col>
       <Col xs={12}>

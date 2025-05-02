@@ -2,14 +2,15 @@
 
 .headerLink {
   overflow-x: hidden;
-
+  
   @media (min-width: map_get($grid-breakpoints, lg)) and (min-height: $screen-lg-height), (max-width: map_get($grid-breakpoints, md) - 1px) {
-    font-size: $font-size-base;
+    font-size: 13px;
   }
 
   a {
     display: block;
-    color: $sidebar-color;
+    color: var(--sidebar-color);
+    transition: all .35s ease;
     text-decoration: none;
     cursor: pointer;
 
@@ -31,7 +32,7 @@
     border-top: 1px solid $sidebar-item-border-color;
 
     &:hover {
-      background-color: $sidebar-item-hover-bg-color;
+      background-color: var(--sidebar-item-hover-bg-color);
     }
 
     > i {
@@ -45,7 +46,12 @@
 
   .icon {
     font-size: $font-size-larger;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .35s ease;
+    color: var(--sidebar-color);
+    background-color: transparent;
     position: absolute;
     top: 3px;
     left: 11px;
@@ -53,6 +59,8 @@
     height: 28px;
     line-height: 28px;
     text-align: center;
+    border-radius: 0;
+    opacity: .7;
 
     @media (min-width: map_get($grid-breakpoints, lg)) and (min-height: $screen-lg-height), (max-width: map_get($grid-breakpoints, md) - 1px) {
       top: 12px;
@@ -62,15 +70,53 @@
   .badge {
     float: right;
     line-height: 8px;
-    margin-top: 16px;
+    margin-top: 9px;
     margin-right: 15px;
-    padding: 7px;
+    padding: 0.5em 0.5em;
+    font-size: 0.875em;
+    //background: var(--sidebar-icon-bg);
+    color: var(--sidebar-badge-color);
+    @media (min-width: map_get($grid-breakpoints, lg)) and (min-height: $screen-lg-height), (max-width: map_get($grid-breakpoints, md) - 1px) {
+      margin-top: 16px;
+    }
+  }
+
+  .headerNode {
+    color: var(--sidebar-hightlight-two)
+  }
+
+  .headerUpdate {
+    color: var(--sidebar-hightlight)
+  }
+  
+  a.headerLinkActive {
+    color: var(--sidebar-item-active-color);
+    font-weight: $font-weight-bold;
+    white-space: nowrap;
+    
+    &:hover {
+      color: var(--sidebar-icon-bg);
+    }
+
+    .icon {
+      border-radius: 50%;
+      background-color: var(--sidebar-icon-bg);
+      opacity: 1;
+      display: flex;
+      justify-content: center;
+      transform: rotate(360deg);
+      align-items: center;
+      color: var(--sidebar-bg-color);
+      i {
+        color: var(--sidebar-bg-color);
+      }
+    }
   }
 }
 
 .headerLabel {
   font-weight: 600;
-  color: theme-color('warning');
+  color: var(--sidebar-item-active-color);
 }
 
 .collapsed .caret {
@@ -81,22 +127,10 @@
   display: flex;
   align-items: center;
   margin-left: auto;
+  font-size: 19px;
   margin-right: 15px;
-
+  color: var(--sidebar-color);
   @include transition(transform 0.3s ease-in-out);
-}
-
-a.headerLinkActive {
-  color: $sidebar-item-active-color;
-
-  .icon {
-    border-radius: 50%;
-    background-color: $sidebar-item-active-color;
-
-    i {
-      color: $white;
-    }
-  }
 }
 
 .panel {
@@ -104,15 +138,18 @@ a.headerLinkActive {
   box-shadow: none;
   margin: 0;
   border-radius: 0;
-  background-color: lighten($sidebar-bg-color, 5%);
 
   a.headerLinkActive {
     font-weight: $font-weight-semi-bold;
-    color: $sidebar-color;
+    color: var(--sidebar-color);
+
+    &:hover {
+      color: var(--sidebar-color);
+    }
   }
 
   ul {
-    background: $sidebar-action-bg;
+    background: var(--sidebar-action-bg);
     padding: $spacer;
 
     li {
@@ -124,7 +161,7 @@ a.headerLinkActive {
       font-size: $font-size-mini;
 
       &:hover {
-        background-color: $sidebar-item-hover-bg-color;
+        background-color: var(--sidebar-item-hover-bg-color);
       }
     }
   }

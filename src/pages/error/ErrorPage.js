@@ -1,5 +1,4 @@
 import React from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {
   Container,
   Form,
@@ -9,7 +8,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import s from './ErrorPage.scss';
+import s from './ErrorPage.module.scss';
 
 class ErrorPage extends React.Component {
   render() {
@@ -29,14 +28,14 @@ class ErrorPage extends React.Component {
                 <Input className="input-no-border" type="text" placeholder="Search Pages" />
               </FormGroup>
               <Link to="app/extra/search">
-                <Button className={s.errorBtn} type="submit" color="inverse">
-                  Search <i className="fa fa-search text-warning ml-xs" />
+                <Button className={s.errorBtn} type="submit" color="success">
+                  Search <i className="fa fa-search text-white ms-2" />
                 </Button>
               </Link>
             </Form>
           </div>
           <footer className={s.pageFooter}>
-            2017 &copy; Sing. Admin Dashboard Template.
+            2019 &copy; Sing App - React Admin Dashboard Template.
           </footer>
         </Container>
       </div>
@@ -44,4 +43,4 @@ class ErrorPage extends React.Component {
   }
 }
 
-export default withStyles(s)(ErrorPage);
+export default ErrorPage;

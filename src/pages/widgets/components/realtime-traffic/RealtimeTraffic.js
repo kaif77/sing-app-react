@@ -3,7 +3,8 @@ import {
   Progress,
 } from 'reactstrap';
 import Rickshaw from 'rickshaw';
-
+import { connect } from 'react-redux';
+import config from '../../../../config'
 
 class RealtimeTraffic extends React.Component {
   state = { graph: null }
@@ -15,6 +16,12 @@ class RealtimeTraffic extends React.Component {
   componentDidMount() {
     this.initChart();
     window.addEventListener('resize', this.onResizeRickshaw);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.sidebarStatic !== prevProps.sidebarStatic) {
+      setTimeout(() => this.onResizeRickshaw(),500)
+    }
   }
 
   componentWillUnmount() {
@@ -39,11 +46,11 @@ class RealtimeTraffic extends React.Component {
       realtime: true,
       series: [
         {
-          color: '#343434', // 'gray-dark'
+          color: "rgba(111, 176, 249, 0.2)", // gray,
           data: seriesData[0],
           name: 'Uploads',
         }, {
-          color: '#666', // gray,
+          color: config.app.themeColors.primary, // 'gray-dark'
           data: seriesData[1],
           name: 'Downloads',
         },
@@ -73,17 +80,17 @@ class RealtimeTraffic extends React.Component {
         <h6>Node.js <span className="fw-semi-bold">4.0.1 distribution</span></h6>
         <Progress className="bg-gray-lighter progress-xs" color="danger" value="77" />
         <p className="mt-sm mb fs-mini ">
-          <small><span className="circle bg-warning text-gray-dark"><i
+          <small><span className="circle bg-primary text-white"><i
             className="glyphicon glyphicon-chevron-up"
           /></span></small>
           <strong className="px-1">17% higher</strong>
           than last month
         </p>
-        <p className="fs-sm text-gray-lighter mb-0">Remaining hours</p>
-        <button className="btn btn-xs btn-gray pull-right ml-xs">
+        <p className="fs-sm mb-0">Remaining hours</p>
+        <button className="btn btn-xs btn-gray-default pull-right ml-xs">
           <i className="fa fa-compress" /> track
         </button>
-        <button className="btn btn-xs btn-gray pull-right">
+        <button className="btn btn-xs btn-gray-default pull-right">
           <i className="fa fa-pause" /> pause
         </button>
         <p className="value4">2h 56m</p>
@@ -98,4 +105,10 @@ class RealtimeTraffic extends React.Component {
   }
 }
 
-export default RealtimeTraffic;
+function mapStateToProps(store) {
+  return {
+    sidebarStatic: store.navigation.sidebarStatic,
+  };
+}
+
+export default connect(mapStateToProps)(RealtimeTraffic);

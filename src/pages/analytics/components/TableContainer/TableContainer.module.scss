@@ -4,7 +4,6 @@
   td,
   th {
     font-weight: normal;
-    border: none;
     align-items: center;
     min-width: 100px;
   }
@@ -13,7 +12,15 @@
     font-size: $font-size-sm;
   }
 
+  .headCellPadding {
+    padding-left: 10px;
+  }
+
   tbody tr:nth-child(odd) {
     background-color: $gray-light;
   }
+}
+
+table thead {
+  border-style: hidden !important;
 }

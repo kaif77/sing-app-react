@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
   Row,
   Col,
   Table,
@@ -45,19 +43,16 @@ const tableData = [
 
 const Colors = () => (
   <div>
-    <Breadcrumb>
-      <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-      <BreadcrumbItem active>Colors</BreadcrumbItem>
-    </Breadcrumb>
     <h1 className="page-title">Colors</h1>
     <Row>
-      <Col>
+      <Col xs={12}>
         <Widget
           title={<h5>States <span className="fw-semi-bold">Colors</span></h5>}
           close collapse
         >
           <p>Sing comes with a number of state colors that can be applied to
           the most of elements and components. It reuses Bootstrap&apos;s original 6 states:</p>
+          <div className="table-responsive">
           <Table>
             <thead>
               <tr>
@@ -73,11 +68,12 @@ const Colors = () => (
                   <th scope="row" className="fw-thin">{state}</th>
                   <td><span className={`circle bg-${state.toLowerCase()}`}>&nbsp;</span></td>
                   <td><code>*-{state.toLowerCase()}</code></td>
-                  <td>{usage.map(item => <code key={item} className="mr-xs">{item}</code>)}</td>
+                  <td>{usage.map(item => <code key={item} className="me-2">{item}</code>)}</td>
                 </tr>,
               )}
             </tbody>
           </Table>
+          </div>
         </Widget>
       </Col>
     </Row>
@@ -89,7 +85,7 @@ const Colors = () => (
         >
           <p>Convey meaning through color with a handful of color utility classes.
             Includes support for styling links with hover states, too. Use <code>text-*</code> class to fill text.</p>
-          <div className="widget-padding-md border rounded w-100 h-100 text-left">
+          <div className="widget-padding-md border rounded w-100 h-100 text-start">
             <h1 className="text-danger">h1. Heading</h1>
             <h2 className="text-warning">h2. Heading</h2>
             <h3 className="text-success">h3. Heading</h3>
@@ -106,14 +102,14 @@ const Colors = () => (
         >
           <p>Use any of the available button classes to quickly create a styled button.
             Semantically distinguishable beauty.</p>
-          <Button className="width-100 mb-xs mr-xs" color="default">Default</Button>
-          <Button className="width-100 mb-xs mr-xs" color="primary">Primary</Button>
-          <Button className="width-100 mb-xs mr-xs" color="info">Info</Button>
-          <Button className="width-100 mb-xs mr-xs" color="success">Success</Button>
-          <Button className="width-100 mb-xs mr-xs" color="warning">Warning</Button>
-          <Button className="width-100 mb-xs mr-xs" color="danger">Danger</Button>
-          <Button className="width-100 mb-xs mr-xs" color="gray">Gray</Button>
-          <Button className="width-100 mb-xs mr-xs" color="inverse">Inverse</Button>
+          <Button className="width-100 mb-3 me-3" color="default">Default</Button>
+          <Button className="width-100 mb-3 me-3" color="primary">Primary</Button>
+          <Button className="width-100 mb-3 me-3" color="info">Info</Button>
+          <Button className="width-100 mb-3 me-3" color="success">Success</Button>
+          <Button className="width-100 mb-3 me-3" color="warning">Warning</Button>
+          <Button className="width-100 mb-3 me-3" color="danger">Danger</Button>
+          <Button className="width-100 mb-3 me-3" color="gray">Gray</Button>
+          <Button className="width-100 mb-3 me-3" color="inverse">Inverse</Button>
         </Widget>
       </Col>
     </Row>

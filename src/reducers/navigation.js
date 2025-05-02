@@ -1,9 +1,14 @@
-import { TOGGLE_SIDEBAR, OPEN_SIDEBAR, CLOSE_SIDEBAR, CHANGE_ACTIVE_SIDEBAR_ITEM } from '../actions/navigation';
+import { 
+  TOGGLE_SIDEBAR, 
+  OPEN_SIDEBAR, 
+  CLOSE_SIDEBAR, 
+  CHANGE_ACTIVE_SIDEBAR_ITEM, 
+} from '../actions/navigation';
 
 const initialState = {
   sidebarOpened: false,
   sidebarStatic: false,
-  activeItem: window.location.pathname,
+  activeItem: JSON.parse(localStorage.getItem('staticSidebar')) ? window.location.pathname : null,
 };
 
 export default function runtime(state = initialState, action) {

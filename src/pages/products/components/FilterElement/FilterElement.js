@@ -31,10 +31,10 @@ class FilterElement extends Component {
         <div className={s.filterElementLable}>{defaultLable}</div>
         <UncontrolledButtonDropdown>
           <DropdownToggle
-            caret color="default"
-            className="dropdown-toggle-split mr-xs"
+            caret color="gray-default"
+            className="dropdown-toggle-split me-2"
           >
-            {currentOption}
+            {currentOption}&nbsp;&nbsp;
           </DropdownToggle>
           <DropdownMenu>
             {options.map(item =>

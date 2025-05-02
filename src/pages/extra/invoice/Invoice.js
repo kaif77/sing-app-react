@@ -21,10 +21,10 @@ class Stats extends React.Component {
   render() {
     return (
       <Row>
-        <Col lg={11}>
+        <Col lg={12}>
           <Row className={s.root}>
             <Col xs={12}>
-              <Widget>
+              <Widget bodyClass={"p-0"}>
                 <div className="widget">
                   <header>
                     <Row>
@@ -32,11 +32,11 @@ class Stats extends React.Component {
                         <img src={iLogo} alt="Logo" className={s.invoiceLogo} />
                       </Col>
                       <Col md="6" xs="12" className="col-print-6">
-                        <h4 className="text-right">
+                        <h4 className="text-end">
                           #<span className="fw-semi-bold">9.45613</span> /
                           <small>17 May 2014</small>
                         </h4>
-                        <div className="text-muted fs-larger text-right">
+                        <div className="text-muted fs-larger text-end">
                           Some Invoice number description or whatever
                         </div>
                       </Col>
@@ -59,7 +59,7 @@ class Stats extends React.Component {
                         </address>
                       </Col>
 
-                      <Col sm={6} className="col-print-6 text-right">
+                      <Col sm={6} className="col-print-6 text-end">
                         <h5 className="text-muted no-margin">Client Information</h5>
                         <h3 className="client-name m-t-1">
                           Veronica Niasvizhskaja
@@ -155,23 +155,23 @@ class Stats extends React.Component {
                         </Row>
                       </Col>
                     </Row>
-                    <p className="text-right mt-lg mb-xs">
+                    <p className="text-end mt-lg mb-xs">
                       Marketing Consultant
                     </p>
-                    <p className="text-right">
+                    <p className="text-end">
                       <span className="fw-semi-bold">Bob Smith</span>
                     </p>
                     <ButtonToolbar className="mt-lg justify-content-end d-print-none">
-                      <Button onClick={this.printInvoice} color="inverse" className="mr-2">
+                      <Button onClick={this.printInvoice} color="inverse" className="me-2">
                         <i className="fa fa-print" />
                         &nbsp;&nbsp;
                         Print
                       </Button>
-                      <Button color="danger">
+                      <Button color="success">
                         Proceed with Payment
                         &nbsp;
                         <span className="circle bg-white">
-                          <i className="fa fa-arrow-right text-danger" />
+                          <i className="fa fa-arrow-right text-success" />
                         </span>
                       </Button>
                     </ButtonToolbar>

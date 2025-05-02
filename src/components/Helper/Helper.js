@@ -1,92 +1,245 @@
-import React, { Component } from 'react';
-import cx from 'classnames';
-import { Button } from 'reactstrap';
+import React, { Component } from "react";
+import cx from "classnames";
+import { Button } from "reactstrap";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+// import Joyride, { STATUS } from 'react-joyride';
+import {
+  DashboardThemes,
+  SidebarTypes,
+  NavbarTypes,
+} from "../../reducers/layout";
+import {
+  changeTheme,
+  changeSidebarColor,
+  changeNavbarColor,
+  navbarTypeToggle,
+  sidebarTypeToggle,
+} from "../../actions/layout";
+import CustomColorPicker from "../ColorPicker";
+import config from "../../config";
 
-import Widget from '../Widget';
+import Widget from "../Widget";
 
-import s from './Helper.module.scss'; // eslint-disable-line
+import s from "./Helper.module.scss"; // eslint-disable-line
 
 class Helper extends Component {
-  state = { isOpened: false };
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    dashboardTheme: PropTypes.string,
+  };
+
+  static defaultProps = {
+    dashboardTheme: DashboardThemes.DARK,
+  };
+
+  state = {
+    isOpened: false,
+    run: false,
+    steps: [
+      {
+        content: "Easily adjust navbar 😃",
+        placement: "left",
+        target: ".navbar-type-switcher",
+        textAlign: "center",
+        disableBeacon: true,
+      },
+      {
+        content: "Choose a color for navbar, create unique layout 😄",
+        placement: "left",
+        target: ".navbar-color-picker",
+      },
+      {
+        content: "Also customize sidebar type, it's cool 🙂",
+        placement: "left",
+        target: ".sidebar-type-switcher",
+      },
+      {
+        content:
+          "We also have different colors for sidebar, pick one from palette 😃",
+        placement: "left",
+        target: ".sidebar-color-picker",
+      },
+      {
+        content: "Purchase out template if you like it, we appreciate it 😄!",
+        placement: "left",
+        target: ".purchase-button",
+      },
+    ],
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.modalIsOpen && this.state.modalIsOpen) {
+      this.start();
+    }
+  }
+
+  start = () => {
+    this.setState({
+      run: false,
+    });
+  };
 
   toggle = () => {
-    this.setState(prevState => ({
-      isOpened: !prevState.isOpened,
-    }));
-  }
+    this.setState({
+      isOpened: !this.state.isOpened,
+    });
+  };
 
-  changeLocation = (link) => {
-    window.open(link);
-  }
+  changeTheme = (state) => {
+    localStorage.setItem("dashboardTheme", state);
+    this.props.dispatch(changeTheme(state));
+    this.props.dispatch(changeSidebarColor(state));
+  };
+
+  navbarStateToggle = (state) => {
+    localStorage.setItem("navbarType", state);
+    this.props.dispatch(navbarTypeToggle(state));
+  };
+
+  sidebarStateToggle = (state) => {
+    localStorage.setItem("sidebarType", state);
+    this.props.dispatch(sidebarTypeToggle(state));
+  };
+
+  updateColor = (value) => {
+    localStorage.setItem("navbarColor", value);
+    this.props.dispatch(changeNavbarColor(value));
+  };
 
   render() {
     const { isOpened } = this.state;
+    const navbarColor = localStorage.getItem("navbarColor");
+    const sidebarColor = localStorage.getItem("dashboardTheme");
+    const navbarType = localStorage.getItem("navbarType");
+    const sidebarType = localStorage.getItem("sidebarType");
+
     return (
       <div className={cx(s.themeHelper, { [s.themeHelperOpened]: isOpened })}>
-        <Widget
-          className={s.themeHelperContent}
-          bodyClass="mt-3"
-          title={
-            <header className={cx(s.themeHelperHeader, 'd-flex p-0')}>
-              <Button color="warning" className={s.themeHelperBtn} onClick={this.toggle}>
-                <div className={cx(s.themeHelperSpinner, 'text-white')}>
-                  <i className="la la-cog" />
-                  <i className="la la-cog" />
-                </div>
-              </Button>
-              <h6>Configuration</h6>
-            </header>
-          }
+        <div
+          className={`${s.themeHelperBtn} bg-primary helper-button`}
+          onClick={this.toggle}
         >
-          <div class="theme-switcher d-flex justify-content-center">
-              <div class="form-check abc-radio abc-radio-warning form-check-inline">
-                <input class="form-check-input" type="radio" id="css-light" value="option2" checked name="css-light" aria-label="Sing Light"/>
-                <label class="form-check-label" for="css-light"></label>
+          <div className={cx(s.themeHelperSpinner, "text-white")}>
+            <i className="la la-cog" />
+            <i className="la la-cog" />
+          </div>
+        </div>
+        <Widget className={s.themeHelperContent}>
+          <div className={s.helperHeader}>
+            <h5 className="m-0">Theme</h5>
+            <Button onClick={this.start} outline color="info">
+              Check out tour!
+            </Button>
+          </div>
+
+          <div className="theme-settings">
+            <h5 className="navbar-type-switcher">Navbar Type</h5>
+            <div className="row">
+              <div className="abc-radio col-auto">
+                <input
+                  onChange={() => this.navbarStateToggle(NavbarTypes.STATIC)}
+                  type="radio"
+                  checked={navbarType === NavbarTypes.STATIC ? true : ""}
+                  name="navbar-type"
+                  id="navbar_static"
+                />
+                <label htmlFor="navbar_static">Static</label>
               </div>
-              <div class="form-check abc-radio abc-radio-secondary mr-0 form-check-inline">
-                <input class="form-check-input" onClick={() => this.changeLocation('https://sing-app.herokuapp.com/')} type="radio" id="css-dark" value="option1" name="css-light" aria-label="Single Dark"/>
-                <label class="form-check-label" for="css-dark"></label>
+
+              <div className="abc-radio col-auto">
+                <input
+                  onChange={() => this.navbarStateToggle(NavbarTypes.FLOATING)}
+                  type="radio"
+                  checked={navbarType === NavbarTypes.FLOATING ? true : ""}
+                  name="navbar-type"
+                  id="navbar_floating"
+                />
+                <label htmlFor="navbar_floating">Floating</label>
               </div>
             </div>
-          <div className="mt-4">
+
+            <h5 className="mt-4 navbar-color-picker">Navbar Color</h5>
+            <CustomColorPicker
+              colors={config.app.navbarColors}
+              activeColor={navbarColor}
+              updateColor={this.updateColor}
+              customizationItem={"navbar"}
+            />
+
+            <h5 className="mt-4 sidebar-type-switcher">Sidebar Type</h5>
+            <div className="row">
+              <div className="abc-radio col-auto">
+                <input
+                  type="radio"
+                  onChange={() =>
+                    this.sidebarStateToggle(SidebarTypes.TRANSPARENT)
+                  }
+                  checked={sidebarType === SidebarTypes.TRANSPARENT ? true : ""}
+                  name="sidebar-type"
+                  id="sidebar_transparent"
+                />
+                <label htmlFor="sidebar_transparent">Transparent</label>
+              </div>
+
+              <div className="abc-radio col-auto">
+                <input
+                  type="radio"
+                  onChange={() => this.sidebarStateToggle(SidebarTypes.SOLID)}
+                  checked={sidebarType === SidebarTypes.SOLID ? true : ""}
+                  name="sidebar-type"
+                  id="sidebar_solid"
+                />
+                <label htmlFor="sidebar_solid">Solid</label>
+              </div>
+            </div>
+
+            <h5 className="mt-4 sidebar-color-picker">Sidebar Color</h5>
+            <CustomColorPicker
+              colors={config.app.sidebarColors}
+              activeColor={sidebarColor}
+              updateColor={this.changeTheme}
+              customizationItem={"sidebar"}
+            />
+          </div>
+          <div className="mt-5 d-grid ">
             <Button
-              href="https://flatlogic.com/dashboards/sing-app-react"
+              href="https://flatlogic.com/admin-dashboards/sing-app-react"
               target="_blank"
-              className="btn-rounded-f btn-block fs-mini"
-              color="warning"
+              className="btn-rounded-f fs-mini purchase-button"
+              color="info"
             >
               <span className="text-white">Purchase</span>
             </Button>
             <Button
-              href="http://demo.flatlogic.com/sing-app/documentation/"
+              href="https://demo.flatlogic.com/sing-app-react/#/documentation/getting-started/overview"
               target="_blank"
-              className="btn-rounded-f btn-block fs-mini text-white"
+              className="btn-rounded-f fs-mini text-white mt-4"
+              color="primary"
             >
               Documentation
             </Button>
           </div>
-          <div className="d-flex justify-content-between mt-lg">
+          <div className="d-flex justify-content-between mt-2">
             <Button
-              href="https://flatlogic.com/contact"
+              href="https://flatlogic.com/forum"
               target="_blank"
-              className="btn-outline-default btn-rounded-f fs-mini text-muted px-2"
+              className="btn-outline-default btn-rounded-f fs-mini text-white px-2"
             >
-              <i className="glyphicon glyphicon-headphones mr-xs" />
+              <i className="glyphicon glyphicon-headphones me-2" />
               Support
             </Button>
             <Button
               href="https://github.com/flatlogic/sing-app"
               target="_blank"
-              className="btn-outline-default btn-rounded-f fs-mini text-muted px-2"
+              className="btn-outline-default btn-rounded-f fs-mini text-white px-2"
             >
-              <i className="fa fa-github mr-xs" />
+              <i className="fa fa-github me-2" />
               Github
             </Button>
           </div>
           <div className="mt-lg d-flex flex-column align-items-center theme-helper__sharing">
-            <span className="fs-sm">
-              Thank you for sharing!
-            </span>
+            <span className="fs-sm">Thank you for sharing!</span>
             <div className="d-flex justify-content-center text-light mt-2">
               <a
                 target="_blank"
@@ -110,4 +263,14 @@ class Helper extends Component {
   }
 }
 
-export default Helper;
+function mapStateToProps(store) {
+  return {
+    dashboardTheme: store.layout.dashboardTheme,
+    sidebarColor: store.layout.sidebarColor,
+    navbarColor: store.layout.navbarColor,
+    navbarType: store.layout.navbarType,
+    sidebarType: store.layout.sidebarType,
+  };
+}
+
+export default connect(mapStateToProps)(Helper);

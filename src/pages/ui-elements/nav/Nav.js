@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import {
   Row,
   Col,
-  Breadcrumb,
-  BreadcrumbItem,
   Nav,
   NavItem,
   NavLink,
@@ -14,6 +12,8 @@ import {
 } from 'reactstrap';
 
 import Widget from '../../../components/Widget';
+
+import s from './Nav.module.scss'
 
 class NavExamples extends Component {
   state = {
@@ -29,10 +29,6 @@ class NavExamples extends Component {
   render() {
     return (
       <div>
-        <Breadcrumb>
-          <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-          <BreadcrumbItem active>UI Nav</BreadcrumbItem>
-        </Breadcrumb>
         <Row>
           <Col xs={12} md={6}>
             <Widget
@@ -124,7 +120,7 @@ class NavExamples extends Component {
                 JavaScript plugin.
               </p>
               <div className="bg-light p-3">
-                <Nav tabs>
+                <Nav tabs  className={`${s.coloredNav}`}>
                   <NavItem>
                     <NavLink href="#" active>Link</NavLink>
                   </NavItem>

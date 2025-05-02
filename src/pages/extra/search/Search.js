@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/href-no-hash */
-
 import React from 'react';
 import {
   Row,
@@ -20,25 +18,21 @@ import {
 } from 'reactstrap';
 
 import s from './Search.module.scss';
-import i1 from '../../../images/search/1.jpg';
-import i2 from '../../../images/search/5.jpg';
-import i3 from '../../../images/search/3.jpg';
-import i4 from '../../../images/search/13.jpg';
+import i1 from '../../../images/search/search1.jpg';
+import i2 from '../../../images/search/search5.jpg';
+import i3 from '../../../images/search/search3.jpg';
+import i4 from '../../../images/search/search13.jpg';
 
 class Search extends React.Component {
 
   render() {
     return (
       <div className={s.root}>
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">YOU ARE HERE</li>
-          <li className="breadcrumb-item active">Search Results</li>
-        </ol>
         <h1 className="page-title">Matching - <span className="fw-semi-bold">Results</span></h1>
         <div className="btn-toolbar justify-content-between">
           <div className="d-inline-flex">
             <UncontrolledButtonDropdown>
-              <DropdownToggle color="default" caret>
+              <DropdownToggle color="gray-default" caret>
                 Popular
               </DropdownToggle>
               <DropdownMenu>
@@ -48,8 +42,8 @@ class Search extends React.Component {
                 <DropdownItem>Latest</DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
-            <UncontrolledButtonDropdown>
-              <DropdownToggle color="default" caret>
+            <UncontrolledButtonDropdown className="ms-2">
+              <DropdownToggle color="gray-default" caret>
                 All Time
               </DropdownToggle>
               <DropdownMenu>
@@ -66,20 +60,20 @@ class Search extends React.Component {
           </ButtonGroup>
         </div>
         <Row className="mt-3 d-block">
-          <Col xl={3} sm={12} className="float-xl-right">
+          <Col xl={3} sm={12} className="float-lg-end">
             <h5>Results <span className="fw-semi-bold">Filtering</span></h5>
             <p className="text-muted fs-mini">Listed content is categorized by the following groups:</p>
             <Nav className={`nav-pills flex-column nav-stacked ${s.searchResultCategories} mt`}>
               <NavItem>
                 <NavLink href="#">
                   Hot Ideas
-                  <Badge color="default" pill className="float-right">34</Badge>
+                  <Badge color="danger" pill className="float-end">34</Badge>
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="#">
                   Latest Pictures
-                  <Badge color="default" pill className="float-right">9</Badge>
+                  <Badge color="success" pill className="float-end">9</Badge>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -91,7 +85,7 @@ class Search extends React.Component {
               <NavItem>
                 <NavLink href="#">
                   Globals
-                  <Badge color="default" pill className="float-right">18</Badge>
+                  <Badge color="info" pill className="float-end">18</Badge>
                 </NavLink>
               </NavItem>
             </Nav>
@@ -140,7 +134,7 @@ class Search extends React.Component {
                     <h4 className={s.searchResultItemHeading}>
                       <button className="btn-link">Try. Posted by Okendoken</button>
                       <small>
-                        <span className="badge badge-pill badge-danger float-right">
+                        <span className="badge badge-pill badge-danger float-end">
                           <span className="fw-normal"> Best Deal!</span>
                         </span>
                       </small>

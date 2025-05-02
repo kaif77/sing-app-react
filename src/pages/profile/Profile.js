@@ -1,8 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
   Row,
   Col,
   Input,
@@ -22,10 +20,6 @@ import s from './Profile.module.scss';
 
 const Profile = () => (
   <div className={s.root}>
-    <Breadcrumb>
-      <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-      <BreadcrumbItem active>Profile</BreadcrumbItem>
-    </Breadcrumb>
     <h1 className="page-title">User - <span className="fw-semi-bold">Profile</span>
     </h1>
 
@@ -37,7 +31,7 @@ const Profile = () => (
               <img className="img-fluid" src={p19} alt="..." />
             </div>
             <button className="btn btn-outline btn-sm mb-2">
-              <i className="fa fa-twitter mr-2" />
+              <i className="fa fa-twitter me-2" />
               Follow
             </button>
           </div>
@@ -49,15 +43,15 @@ const Profile = () => (
                 </span>
                 <h5 className="fw-normal">Adam <span className="fw-semi-bold">Johns</span></h5>
                 <p>UI/UX designer</p>
-                <button className="btn btn-danger btn-sm mb-3">
-                  &nbsp;Send
-                  <i className="fa fa-envelope ml-2" />&nbsp;
+                <button className="btn btn-success btn-sm mb-3">
+                  Send
+                  <i className="fa fa-envelope ms-2" />
                 </button>
                 <div>
                   <ul className={cx(s.profileContacts, 'mt-sm')}>
-                    <li><i className="fa fa-lg fa-phone fa-fw mr-2" /><button className="btn-link"> +375 29 555-55-55</button></li>
-                    <li><i className="fa fa-lg fa-envelope fa-fw mr-2" /><button className="btn-link"> psmith@example.com</button></li>
-                    <li><i className="fa fa-lg fa-map-marker fa-fw mr-2" /><button className="btn-link"> Minsk, Belarus</button></li>
+                    <li><i className="fa fa-lg fa-phone fa-fw me-2" /><button className="btn-link"> +375 29 555-55-55</button></li>
+                    <li><i className="fa fa-lg fa-envelope fa-fw me-2" /><button className="btn-link"> psmith@example.com</button></li>
+                    <li><i className="fa fa-lg fa-map-marker fa-fw me-2" /><button className="btn-link"> Minsk, Belarus</button></li>
                   </ul>
                 </div>
               </div>
@@ -78,9 +72,9 @@ const Profile = () => (
                 </div>
               </div>
               <p>
-                <button className="btn-link badge badge-warning rounded-0"> UI/UX </button>
-                <button className="btn-link badge badge-danger rounded-0 ml-2"> Web Design </button>
-                <button className="btn-link badge badge-default rounded-0 ml-2"> Mobile Apps </button>
+                <span className="badge bg-info rounded-0"> UI/UX </span>
+                <span className="badge bg-primary rounded-0 ms-2"> Web Design </span>
+                <span className="badge bg-default rounded-0 ms-2"> Mobile Apps </span>
               </p>
               <p className="lead mt-xlg">
                 My name is Adam Johns and here is my new Sing user profile page.
@@ -95,7 +89,7 @@ const Profile = () => (
       </Col>
       <Col lg={6} xs={12}>
         <section className="activities">
-          <h2 className="ml-3">Activities</h2>
+          <h2 className="ms-3">Activities</h2>
           <section className={s.event}>
             <header>
               <span className={s.eventAvatar}>
@@ -148,7 +142,7 @@ const Profile = () => (
               </div>
               <ul className="post-comments mt-sm">
                 <li>
-                  <span className="thumb-xs avatar pull-left mr-sm">
+                  <span className="thumb-xs avatar pull-left me-2">
                     <img className="rounded-circle" src={a1} alt="..." />
                   </span>
                   <div className="comment-body">
@@ -157,7 +151,7 @@ const Profile = () => (
                   </div>
                 </li>
                 <li>
-                  <span className="thumb-xs avatar pull-left mr-sm">
+                  <span className="thumb-xs avatar pull-left me-2">
                     <img className="rounded-circle" src={avatar} alt="..." />
                   </span>
                   <div className="comment-body">
@@ -167,21 +161,21 @@ const Profile = () => (
               </ul>
             </footer>
           </section>
-          <Form className="mt" action="#">
+          <Form className="mt mb-4" action="#">
             <FormGroup className="mb-2">
               <Label className="sr-only" for="new-event">New event</Label>
               <Input type="textarea" id="new-event" placeholder="Post something..." rows="3" />
             </FormGroup>
             <div className="btn-toolbar">
-              <div className="btn-group">
-                <button className="btn btn-sm btn-default">
+
+                <button className="btn btn-sm btn-gray-default">
                   <i className="fa fa-camera fa-lg" />
                 </button>
-                <button className="btn btn-sm btn-default">
+                <button className="btn btn-sm btn-gray-default">
                   <i className="fa fa-map-marker fa-lg" />
                 </button>
-              </div>
-              <button type="submit" className="btn btn-danger btn-sm ml-auto">Post</button>
+
+              <button type="submit" className="btn btn-success btn-sm ms-auto">Post</button>
             </div>
           </Form>
         </section>

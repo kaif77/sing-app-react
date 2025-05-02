@@ -1,44 +1,51 @@
 import React from 'react';
 import Rickshaw from 'rickshaw';
-
-import $ from 'jquery';
-
+import { connect } from 'react-redux';
 import {
   Row, Col,
 } from 'reactstrap';
 
 import Sparklines from '../../../../components/Sparklines';
 import s from './ChangesChart.module.scss';
+import config from '../../../../config'
 
 class ChangesChart extends React.Component {
 
-  constructor(prop) {
-    super(prop);
-    this.state = {
+    state = {
       rickshawGraph: null,
-      sparklineData: [],
-      sparklineOptions: {},
+      sparklineData: [{data: [3, 6, 2, 4, 5, 8, 6, 8]}],
+      sparklineOptions: {
+        colors: [config.app.themeColors.primary],
+        plotOptions: {
+          bar: {
+            columnWidth: '50%'
+          }
+        }
+      },
     };
-    this.onResizeRickshaw = this.onResizeRickshaw.bind(this);
-    this.initRickshaw = this.initRickshaw.bind(this);
-    this.initSparkline();
-  }
+  
 
   componentDidMount() {
     this.initRickshaw();
     window.addEventListener('resize', this.onResizeRickshaw);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.sidebarStatic !== prevProps.sidebarStatic) {
+      setTimeout(() => this.onResizeRickshaw(), 500)
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResizeRickshaw);
   }
 
-  onResizeRickshaw() {
+  onResizeRickshaw = () => {
     this.state.graph.configure({ height: 100 });
     this.state.graph.render();
   }
 
-  initRickshaw() {
+  initRickshaw = () => {
     const seriesData = [[], []];
     const random = new Rickshaw.Fixtures.RandomData(32);
     for (let i = 0; i < 32; i += 1) {
@@ -53,7 +60,7 @@ class ChangesChart extends React.Component {
       series: [{
         name: 'pop',
         data: seriesData.shift().map(d => ({ x: d.x, y: d.y })),
-        color: '#7bd47a', // (#64bd63, 0.9)
+        color: config.app.themeColors.default, // (#64bd63, 0.9)
         renderer: 'bar',
         gapSize: 2,
         min: 'auto',
@@ -79,38 +86,11 @@ class ChangesChart extends React.Component {
     this.state.graph.render();
   }
 
-  initSparkline() {
-    const data = [3, 6, 2, 4, 5, 8, 6, 8];
-    const dataMax = Math.max.apply(null, data);
-    const backgroundData = data.map(() => dataMax);
-
-    // eslint-disable-next-line
-    this.state.sparklineData = [backgroundData, data];
-    // eslint-disable-next-line
-    this.state.sparklineOptions = [
-      {
-        type: 'bar',
-        height: 26,
-        barColor: '#eee',
-        barWidth: 7,
-        barSpacing: 5,
-        chartRangeMin: Math.min.apply(null, data),
-        tooltipFormat: new $.SPFormatClass(''),
-      },
-      {
-        composite: true,
-        type: 'bar',
-        barColor: '#64bd63',
-        barWidth: 7,
-        barSpacing: 5,
-      },
-    ];
-  }
-
   render() {
+
     return (
       <div className={s.changesChart}>
-        <div className={`${s.chart} bg-success btlr btrr`}>
+        <div className={`${s.chart} bg-primary btlr btrr`}>
           <p className={s.chartValue}><i className="fa fa-caret-up" /> 352.79</p>
           <p className={s.chartValueChange}>+2.04 (1.69%)</p>
           <div
@@ -118,8 +98,6 @@ class ChangesChart extends React.Component {
               this.rickshawChart = r;
             }}
           />
-          {/*    <div rickshaw-chart [series]="series" [height]="100" [renderer]="'multi'"
-          [configureProps]="{gapSize: 0.5, min: 'auto', strokeWidth: 3}"></div> */}
         </div>
         <h4 className={s.chartTitle}><span className="fw-normal">Salt Lake City</span>, Utah</h4>
         <p className="deemphasize">Today 13:34</p>
@@ -147,7 +125,12 @@ class ChangesChart extends React.Component {
                   this.sparklineRef = r;
                 }}
               />
-              <Sparklines data={this.state.sparklineData} options={this.state.sparklineOptions} />
+              <Sparklines 
+                data={this.state.sparklineData} 
+                options={this.state.sparklineOptions} 
+                width={"80"}
+                height={"25"}
+              />
               <p className="deemphasize">GOOG</p>
             </Col>
           </Row>
@@ -157,4 +140,10 @@ class ChangesChart extends React.Component {
   }
 }
 
-export default ChangesChart;
+function mapStateToProps(store) {
+  return {
+    sidebarStatic: store.navigation.sidebarStatic,
+  };
+}
+
+export default connect(mapStateToProps)(ChangesChart);

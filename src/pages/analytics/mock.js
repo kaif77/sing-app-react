@@ -42,7 +42,7 @@ export default {
     {
       product: 'Sing App',
       total: '754',
-      color: 'warning',
+      color: 'danger',
       registrations: {
         value: 30,
         profit: true,
@@ -55,7 +55,7 @@ export default {
     {
       product: 'RNS',
       total: '1,025',
-      color: 'info',
+      color: 'default',
       registrations: {
         value: 230,
         profit: true,
@@ -156,4 +156,85 @@ export default {
       status: 'Sent',
     },
   ],
+  backendData: {
+    visits: {
+      count: 4.332,
+      logins: 830,
+      sign_out_pct: 0.5,
+      rate_pct: 4.5
+    },
+    performance: {
+      sdk: {
+        this_period_pct: 60,
+        last_period_pct: 30,
+      },
+      integration: {
+        this_period_pct: 40,
+        last_period_pct: 55,
+      }
+    },
+    server: {
+      1: {
+        pct: 60,
+        temp: 37,
+        frequency: 3.3
+      },
+      2: {
+        pct: 54,
+        temp: 31,
+        frequency: 3.3
+      }
+    },
+    revenue: getRevenueData(),
+    mainChart: getMainChartData()
+  },
+  randomData: {
+    first: [7, 7, 6, 2, 3, 4, 7, 4, 3, 1, 4, 4, 8, 3, 4, 10, 7, 10, 7, 2, 9, 2, 8, 9, 7],
+    second: [6, 6, 10, 10, 1, 9, 4, 1, 5, 1, 2, 3, 3, 5, 1, 9, 0, 7, 2, 4, 2, 2, 5, 9, 7],
+    third: [7, 9, 3, 7, 7, 4, 7, 2, 0, 1, 7, 4, 7, 2, 3, 5, 2, 3, 4, 9, 6, 10, 1, 7, 1]
+  }
 };
+
+function getRevenueData() {
+  const data = [];
+  const seriesCount = 3;
+  const accessories = ['SMX', 'Direct', 'Networks'];
+
+  for (let i = 0; i < seriesCount; i += 1) {
+    data.push({
+      label: accessories[i],
+      data: Math.floor(Math.random() * 100) + 1,
+    });
+  }
+
+  return data;
+}
+
+function getMainChartData() {
+  function getRandomData(length, min, max, multiplier = 10, maxDiff = 10) {
+    var array = new Array(length).fill();
+    let lastValue;
+
+    return array.map((item, index) => {
+      let randomValue = Math.floor(Math.random() * multiplier + 1);
+
+      while (
+        randomValue <= min ||
+        randomValue >= max ||
+        (lastValue && randomValue - lastValue > maxDiff)
+        ) {
+        randomValue = Math.floor(Math.random() * multiplier + 1);
+      }
+
+      lastValue = randomValue;
+
+      return [index, randomValue];
+    });
+  }
+
+  const d1 = getRandomData(31, 3500, 6500, 7500, 1000);
+  const d2 = getRandomData(31, 1500, 7500, 7500, 1500);
+  const d3 = getRandomData(31, 1500, 7500, 7500, 1500);
+  return [d1, d2, d3];
+}
+

@@ -1,11 +1,9 @@
 /* eslint-disable */
 import React from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {
   Row,
   Col,
   Button,
-  UncontrolledDropdown,
   DropdownMenu,
   TabContent,
   TabPane,
@@ -15,9 +13,11 @@ import {
   Collapse,
   DropdownItem,
   DropdownToggle,
-  UncontrolledNavDropdown,
+  UncontrolledDropdown
 } from 'reactstrap';
 import classnames from 'classnames';
+
+import s from './TabsAccordion.module.scss'
 
 class TabsAccordion extends React.Component {
 
@@ -118,10 +118,6 @@ class TabsAccordion extends React.Component {
   render() {
     return (
       <div>
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">YOU ARE HERE</li>
-          <li className="breadcrumb-item active">UI Tabs & Accordion</li>
-        </ol>
         <h1 className="page-title">Tabs & Accordion - <span
           className="fw-semi-bold"
         >Components</span></h1>
@@ -131,7 +127,7 @@ class TabsAccordion extends React.Component {
           <Col md="6" xs="12">
             <div className="clearfix">
 
-              <Nav tabs className="float-left bg-light">
+              <Nav tabs className={`float-left ${s.coloredNav}`}>
                 <NavItem>
                   <NavLink
                     className={classnames({ active: this.state.activeFirstTab === 'tab11' })}
@@ -148,7 +144,7 @@ class TabsAccordion extends React.Component {
                     <span>Assumtion</span>
                   </NavLink>
                 </NavItem>
-                <UncontrolledNavDropdown>
+                <UncontrolledDropdown nav>
                   <DropdownToggle nav caret
                                   className={classnames({
                                     active: this.state.activeFirstTab === 'tab13' ||
@@ -166,7 +162,7 @@ class TabsAccordion extends React.Component {
                     }}>@mdo
                     </DropdownItem>
                   </DropdownMenu>
-                </UncontrolledNavDropdown>
+                </UncontrolledDropdown>
               </Nav>
             </div>
             {/* tab content */}
@@ -187,8 +183,8 @@ class TabsAccordion extends React.Component {
                 <p>The same thing is for startups and ideas. If you have an idea right away after
                   it appears in your mind you should go and make a first step to implement
                   it. </p>
-                <div className="float-right">
-                  <Button color="inverse" className="mr-xs">Cancel</Button>
+                <div className="float-end">
+                  <Button color="inverse" className="me-1">Cancel</Button>
                   <Button color="primary">Some button</Button>
                 </div>
                 <div className="clearfix"/>
@@ -202,7 +198,7 @@ class TabsAccordion extends React.Component {
                 <div className="clearfix">
                   <div className="btn-toolbar">
                     <a className="btn btn-default">&nbsp;&nbsp;Check&nbsp;&nbsp;</a>
-                    <a className="btn btn-primary">&nbsp;&nbsp;Dance?&nbsp;&nbsp;</a>
+                    <a className="btn btn-primary text-white">&nbsp;&nbsp;Dance?&nbsp;&nbsp;</a>
                   </div>
                 </div>
               </TabPane>
@@ -231,7 +227,7 @@ class TabsAccordion extends React.Component {
           <Col md="6" xs="12">
             <Row>
               <Col xs="12" className="mb-5">
-                <Nav className="bg-light" tabs>
+                <Nav tabs  className={`${s.coloredNav}`}>
                   <NavItem>
                     <NavLink
                       className={classnames({ active: this.state.activeSecondTab === 'tab21' })}
@@ -303,7 +299,7 @@ class TabsAccordion extends React.Component {
 
             <Row>
               <Col xs="12">
-                <Nav className="bg-light" tabs>
+                <Nav  className={`${s.coloredNav}`} tabs>
                   <NavItem>
                     <NavLink
                       className={classnames({ active: this.state.activeThirdTab === 'tab31' })}
@@ -383,7 +379,7 @@ class TabsAccordion extends React.Component {
               <div className="card panel mb-xs" key={`accord-one-${index.toString()}`}>
                 { /* eslint-disable */ }
                 <div
-                  className="card-header panel-header bg-light" role="button"
+                  className="card-header panel-header bg-white" role="button"
                   onClick={() => { this.toggleAccordionFirst(index); }}
                 >
                   { /* eslint-enable */ }
@@ -405,7 +401,7 @@ class TabsAccordion extends React.Component {
             {this.state.accordionSecondContent.map((element, index) => (<div className="card panel mb-xs" key={`accord-one-${index.toString()}`}>
               { /* eslint-disable */ }
               <div
-                className="card-header panel-header bg-light" role="button"
+                className="card-header panel-header bg-white" role="button"
                 onClick={() => { this.toggleAccordionSecond(index); }}
               >
                 { /* eslint-enable */ }
@@ -413,7 +409,7 @@ class TabsAccordion extends React.Component {
                 {/* eslint-disable-next-line */}
                   <a className="accordion-toggle" role="button">
                     {element.title}
-                    <i className="fa fa-angle-down float-right" />
+                    <i className="fa fa-angle-down float-end" />
                   </a>
                 </div>
               </div>

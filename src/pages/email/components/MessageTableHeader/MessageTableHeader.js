@@ -34,8 +34,8 @@ const MessageTableHeader = (props) => {
       <div>
         <UncontrolledButtonDropdown size="sm">
           <DropdownToggle
-            caret color="default"
-            className="dropdown-toggle-split mr-xs"
+            caret color="gray-default"
+            className="dropdown-toggle-split me-2"
           >
             Select
         </DropdownToggle>
@@ -49,8 +49,8 @@ const MessageTableHeader = (props) => {
         </UncontrolledButtonDropdown >
         <UncontrolledButtonDropdown size="sm">
           <DropdownToggle
-            caret color="default"
-            className="dropdown-toggle-split mr-xs"
+            caret color="gray-default"
+            className="dropdown-toggle-split me-2"
           >
             Actions
         </DropdownToggle>
@@ -63,7 +63,7 @@ const MessageTableHeader = (props) => {
           </DropdownMenu>
         </UncontrolledButtonDropdown>
       </div>
-      <Input placeholder="Search Messages" size="sm" onChange={e => search(e.target.value)} />
+      <Input placeholder="Search Messages" bsSize="sm" onChange={e => search(e.target.value)} />
     </div>
   );
 };

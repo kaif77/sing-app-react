@@ -10,7 +10,7 @@ import {
   UncontrolledTooltip,
   UncontrolledButtonDropdown,
   InputGroup,
-  InputGroupAddon,
+  InputGroupText,
   ButtonGroup,
   DropdownMenu,
   DropdownItem,
@@ -18,11 +18,11 @@ import {
 } from 'reactstrap';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
-import Select2 from 'react-select2-wrapper';
+import Select from 'react-select';
 import Datetime from 'react-datetime';
 import ColorPicker from 'rc-color-picker';
 import MaskedInput from 'react-maskedinput';
-import ReactBootstrapSlider from 'react-bootstrap-slider';
+import Slider, { Range, createSliderWithTooltip } from 'rc-slider';
 import Dropzone from 'react-dropzone';
 import TextareaAutosize from 'react-autosize-textarea';
 import ReactMde, { ReactMdeCommands } from 'react-mde';
@@ -32,24 +32,15 @@ import Widget from '../../../components/Widget';
 
 import s from './Elements.module.scss';
 
+import 'rc-slider/assets/index.css';
+
+const SliderWithTooltip = createSliderWithTooltip(Slider);
+const RangeTooltip = createSliderWithTooltip(Range);
+
 class Elements extends React.Component {
 
   constructor(props) {
     super(props);
-    this.changeValueDropdown = this.changeValueDropdown.bind(this);
-    this.onEditorStateChange = this.onEditorStateChange.bind(this);
-    this.defaultSelectChange = this.defaultSelectChange.bind(this);
-    this.changeSelectDropdownSimple = this.changeSelectDropdownSimple.bind(this);
-    this.changeSelectDropdownGreen = this.changeSelectDropdownGreen.bind(this);
-    this.changeSelectDropdownOrange = this.changeSelectDropdownOrange.bind(this);
-    this.changeSelectDropdownRed = this.changeSelectDropdownRed.bind(this);
-    this.changeSelectDropdownBig = this.changeSelectDropdownBig.bind(this);
-    this.changeColorValue = this.changeColorValue.bind(this);
-    this.changeColorInput = this.changeColorInput.bind(this);
-    this.onChangeInputFiles = this.onChangeInputFiles.bind(this);
-    this.removeInputFiles = this.removeInputFiles.bind(this);
-    this.onChangeInputImage = this.onChangeInputImage.bind(this);
-    this.onDrop = this.onDrop.bind(this);
 
     this.state = {
       dropDownValue: 'Another type',
@@ -59,51 +50,40 @@ class Elements extends React.Component {
       redSelectDropdownValue: 'Ichi',
       bigSelectDropdownValue: 'Fourth Item',
       editorState: EditorState.createEmpty(),
-      selectGroupData: [{
-        id: '1',
-        text: 'NFC EAST',
-        children: [{
-          id: '11', text: 'Dallas Cowboys',
-        }, {
-          id: '12', text: 'New York Giants',
-        }, {
-          id: '13', text: 'Philadelphia Eagles',
-        }, {
-          id: '14', text: 'Washington Redskins',
-        }],
-      }, {
-        id: '2',
-        text: 'NFC NORTH',
-        children: [{
-          id: '21', text: 'Chicago Bears',
-        }, {
-          id: '22', text: 'Detroit Lions',
-        }, {
-          id: '23', text: 'Green Bay Packers',
-        }, {
-          id: '24', text: 'Minnesota Vikings',
-        }],
-      }, {
-        id: '3',
-        text: 'NFC SOUTH',
-        children: [{
-          id: '31', text: 'Atlanta Falcons',
-        }, {
-          id: '32', text: 'Carolina Panthers',
-        }, {
-          id: '33', text: 'New Orleans Saints',
-        }, {
-          id: '34', text: 'Tampa Bay Buccaneers',
-        }],
-      }],
-      selectDefaultData: [{
-        id: 'Magellanic', text: 'Large Magellanic Cloud',
-      }, {
-        id: 'Andromeda', text: 'Andromeda Galaxy',
-      }, {
-        id: 'Sextans', text: 'Sextans A',
-      }],
-      defaultSelectVal: 'Andromeda',
+      selectGroupData: [
+        {
+          label: 'NFC EAST',
+          options: [
+            { value: 'Dallas-Cowboys', label: 'Dallas Cowboys', rating: 'safe' },
+            { value: 'New-York-Giants', label: 'New York Giants', rating: 'good' },
+            { value: 'Philadelphia-Eagles', label: 'Philadelphia Eagles', rating: 'wild' },
+            { value: 'Washington-Redskins', label: 'Washington Redskins', rating: 'crazy' },
+          ],
+        },
+        {
+          label: 'NFC NORTH',
+          options: [
+            { value: 'Chicago-Bears', label: 'Chicago Bears', rating: 'safe' },
+            { value: 'Detroit-Lions', label: 'Detroit Lions', rating: 'good' },
+            { value: 'Green-Bay-Packers', label: 'Green Bay Packers', rating: 'wild' },
+            { value: 'Minnesota-Vikings', label: 'Minnesota Vikings', rating: 'crazy' },
+          ],
+        },
+        {
+          label: 'NFC SOUTH',
+          options: [
+            { value: 'Atlanta-Falcons', label: 'Atlanta Falcons', rating: 'safe' },
+            { value: 'Carolina-Panthers', label: 'Carolina Panthers', rating: 'good' },
+            { value: 'New-Orleans-Saints', label: 'New Orleans Saints', rating: 'wild' },
+            { value: 'Tampa-Bay-Buccaneers', label: 'Tampa Bay Buccaneers', rating: 'crazy' },
+          ],
+        },
+      ],      
+      selectDefaultData: [
+        { value: 'Magellanic', label: 'Large Magellanic Cloud', rating: 'safe' },
+        { value: 'Andromeda', label: 'Andromeda Galaxy', rating: 'good' },
+        { value: 'Sextans', label: 'Sextans A', rating: 'wild' },
+      ],
       groupSelectVal: '',
       colorpickerValue: '#ff0000',
       colorpickerInputValue: '#ff0000',
@@ -159,44 +139,38 @@ class Elements extends React.Component {
     this.setState({ reactMdeValue: value });
   }
 
-  changeValueDropdown(e) {
+  changeValueDropdown = (e) => {
     this.setState({ dropDownValue: e.currentTarget.textContent });
   }
 
-  changeSelectDropdownGreen(e) {
+  changeSelectDropdownGreen = (e) => {
     this.setState({ greenSelectDropdownValue: e.currentTarget.textContent });
   }
 
-  changeSelectDropdownOrange(e) {
+  changeSelectDropdownOrange = (e) => {
     this.setState({ orangeSelectDropdownValue: e.currentTarget.textContent });
   }
 
-  changeSelectDropdownRed(e) {
+  changeSelectDropdownRed = (e) => {
     this.setState({ redSelectDropdownValue: e.currentTarget.textContent });
   }
 
-  changeSelectDropdownBig(e) {
+  changeSelectDropdownBig = (e) => {
     this.setState({ bigSelectDropdownValue: e.currentTarget.textContent });
   }
 
-  changeSelectDropdownSimple(e) {
+  changeSelectDropdownSimple = (e) => {
     this.setState({ simpleSelectDropdownValue: e.currentTarget.textContent });
   }
 
-  defaultSelectChange(e) {
-    this.setState({
-      defaultSelectVal: e,
-    });
-  }
-
-  changeColorValue(colors) {
+  changeColorValue = (colors) => {
     this.setState({
       colorpickerValue: colors.color,
       colorpickerInputValue: colors.color,
     });
   }
 
-  changeColorInput(e) {
+  changeColorInput = (e) => {
     if (e.target.value.length > 3 && e.target.value.length < 8) {
       this.setState({
         colorpickerInputValue: e.target.value,
@@ -210,19 +184,19 @@ class Elements extends React.Component {
     }
   }
 
-  removeInputFiles() {
+  removeInputFiles = () => {
     this.setState({
       inputFiles: [],
     });
   }
 
+  valueFormatter = (v) => {
+    return `${v}`;
+  }
+
   render() {
     return (
       <div className={s.root}>
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">YOU ARE HERE</li>
-          <li className="active breadcrumb-item">Form Elements</li>
-        </ol>
         <h1 className="page-title">Form - <span className="fw-semi-bold">Inputs & Controls</span>
         </h1>
 
@@ -291,7 +265,7 @@ class Elements extends React.Component {
                       Prepended input</Label>
                     <Col md={7}>
                       <InputGroup>
-                        <InputGroupAddon addonType="prepend"><span className="input-group-text"><i className="fa fa-user" /></span></InputGroupAddon>
+                        <span className="input-group-text"><i className="fa fa-user" /></span>
                         <Input id="prepended-input" type="test" bsSize="16" placeholder="Username" />
                       </InputGroup>
                     </Col>
@@ -302,7 +276,7 @@ class Elements extends React.Component {
                     </Label>
                     <Col md={7}>
                       <InputGroup>
-                        <InputGroupAddon addonType="prepend"><span className="input-group-text"><i className="fa fa-lock" /></span></InputGroupAddon>
+                        <span className="input-group-text"><i className="fa fa-lock" /></span>
                         <Input
                           id="password-field" type="password"
                           placeholder="Password"
@@ -317,7 +291,7 @@ class Elements extends React.Component {
                     <Col md={7}>
                       <InputGroup>
                         <Input id="appended-input" bsSize="16" type="text" />
-                        <InputGroupAddon addonType="append">.00</InputGroupAddon>
+                        <InputGroupText>.00</InputGroupText>
                       </InputGroup>
                     </Col>
                   </FormGroup>
@@ -327,9 +301,9 @@ class Elements extends React.Component {
                     </Label>
                     <Col md={7}>
                       <InputGroup>
-                        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
+                        <InputGroupText>$</InputGroupText>
                         <Input id="combined-input" bsSize="16" type="text" />
-                        <InputGroupAddon addonType="append">.00</InputGroupAddon>
+                        <InputGroupText>.00</InputGroupText>
                       </InputGroup>
                     </Col>
                   </FormGroup>
@@ -340,16 +314,16 @@ class Elements extends React.Component {
                     <Col md={7}>
                       <InputGroup className="input-group-transparent">
                         <Input id="transparent-input" type="text" />
-                        <InputGroupAddon addonType="append"><span className="input-group-text"><i className="fa fa-camera" /></span></InputGroupAddon>
+                        <span className="input-group-text"><i className="fa fa-camera" /></span>
                       </InputGroup>
                     </Col>
                   </FormGroup>
 
-                  <FormGroup row className="form-action">
+                  <FormGroup row>
                     <Label md={4} />
                     <Col md={7}>
-                      <Button color="primary" type="submit" className="mr-xs">Save Changes</Button>
-                      <Button color="inverse">Cancel</Button>
+                      <Button color="success" type="submit" className="me-2">Save Changes</Button>
+                      <Button color="gray-default">Cancel</Button>
                     </Col>
                   </FormGroup>
                 </Form>
@@ -371,9 +345,9 @@ class Elements extends React.Component {
                         </Label>
                         <InputGroup>
                           <Input type="text" id="search-input1" />
-                          <InputGroupAddon addonType="append">
-                            <Button color="default">Search</Button>
-                          </InputGroupAddon>
+                          <InputGroupText>
+                            Search
+                          </InputGroupText>
                         </InputGroup>
                       </FormGroup>
 
@@ -383,13 +357,11 @@ class Elements extends React.Component {
                         </Label>
                         <InputGroup>
                           <Input type="text" id="bar" />
-                          <InputGroupAddon addonType="append">
-                            <ButtonGroup>
+                          <ButtonGroup>
                               <Button color="danger"><i className="fa fa-pencil" /></Button>
                               <Button color="warning"><i className="fa fa-plus" /></Button>
                               <Button color="success"><i className="fa fa-refresh" /></Button>
-                            </ButtonGroup>
-                          </InputGroupAddon>
+                          </ButtonGroup>
                         </InputGroup>
                       </FormGroup>
 
@@ -399,7 +371,6 @@ class Elements extends React.Component {
                         </Label>
                         <InputGroup>
                           <Input type="text" id="dropdown-appended" />
-                          <InputGroupAddon addonType="append">
                             <UncontrolledButtonDropdown>
                               <DropdownToggle caret color="success">
                                 Action
@@ -412,7 +383,6 @@ class Elements extends React.Component {
                                 <DropdownItem>Separated link</DropdownItem>
                               </DropdownMenu>
                             </UncontrolledButtonDropdown>
-                          </InputGroupAddon>
                         </InputGroup>
                       </FormGroup>
 
@@ -422,7 +392,6 @@ class Elements extends React.Component {
                         </Label>
                         <InputGroup>
                           <Input type="text" id="segmented-dropdown" />
-                          <InputGroupAddon addonType="append">
                             <UncontrolledButtonDropdown>
                               <Button color="warning">Action</Button>
                               <DropdownToggle
@@ -437,7 +406,6 @@ class Elements extends React.Component {
                                 <DropdownItem>Separated link</DropdownItem>
                               </DropdownMenu>
                             </UncontrolledButtonDropdown>
-                          </InputGroupAddon>
                         </InputGroup>
                         <span className="help-block">Anything can be appended to the right</span>
                       </FormGroup>
@@ -448,7 +416,6 @@ class Elements extends React.Component {
                         </Label>
                         <InputGroup>
                           <Input type="text" id="type-dropdown-appended" />
-                          <InputGroupAddon addonType="append">
                             <UncontrolledButtonDropdown>
                               <DropdownToggle
                                 caret color="primary"
@@ -468,7 +435,6 @@ class Elements extends React.Component {
                                 </DropdownItem>
                               </DropdownMenu>
                             </UncontrolledButtonDropdown>
-                          </InputGroupAddon>
                         </InputGroup>
                         <p className="help-block">
                           You can select some type of a field just right in the place.
@@ -490,11 +456,11 @@ class Elements extends React.Component {
                     </Col>
                   </Row>
 
-                  <FormGroup className="form-action">
-                    <Button color="inverse" type="submit" className="mr-xs">
+                  <FormGroup>
+                    <Button color="success" type="submit" className="me-2">
                       Save Changes
                     </Button>
-                    <Button color="default">Cancel</Button>
+                    <Button color="gray-default">Cancel</Button>
                   </FormGroup>
                 </Form>
               </FormGroup>
@@ -507,7 +473,7 @@ class Elements extends React.Component {
           <Col lg={8} md={12}>
             <Widget
               title={<h6> Form <span className="fw-semi-bold">Options</span></h6>}
-              settingsInverse refresh close
+              settings refresh close
             >
               <Form>
                 <legend>Control sizing</legend>
@@ -535,7 +501,7 @@ class Elements extends React.Component {
           <Col lg={4} md={12}>
             <Widget
               title={<h6> Form <span className="fw-semi-bold">Options</span></h6>}
-              settingsInverse refresh close
+              settings refresh close
             >
               <Form>
                 <legend> Input Groups</legend>
@@ -547,26 +513,20 @@ class Elements extends React.Component {
                 <br />
                 <FormGroup>
                   <InputGroup>
-                    <InputGroupAddon addonType="prepend" className="bg-transparent">
-                      <span className="input-group-text"><i className="fa fa-github-alt" /></span>
-                    </InputGroupAddon>
+                    <span className="input-group-text"><i className="fa fa-github-alt" /></span>
                     <Input type="text" placeholder="First Name" bsSize="16" />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
                   <InputGroup size="lg">
-                    <InputGroupAddon addonType="prepend">
-                      <span className="input-group-text"><i className="fa fa-bars" /></span>
-                    </InputGroupAddon>
+                    <span className="input-group-text"><i className="fa fa-bars" /></span>
                     <Input type="text" placeholder="Username" bsSize="16" />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
                   <InputGroup size="sm">
                     <Input type="text" placeholder="City" bsSize="16" />
-                    <InputGroupAddon addonType="prepend">
-                      <span className="bg-danger text-white input-group-text"><i className="fa fa-code-fork" /></span>
-                    </InputGroupAddon>
+                    <span className="bg-danger text-white input-group-text"><i className="fa fa-code-fork" /></span>
                   </InputGroup>
                 </FormGroup>
               </Form>
@@ -577,7 +537,7 @@ class Elements extends React.Component {
         <Row>
 
           <Col lg="6" md={12}>
-            <Widget title={<h6><i className="fa fa-font" />Textareas</h6>} settings refresh close>
+            <Widget title={<h6>Textareas</h6>} settings refresh close>
               <Form>
                 <legend>Small form</legend>
                 <FormGroup row>
@@ -612,8 +572,8 @@ class Elements extends React.Component {
                       toolbarClassName={s.wysiwygToolbar}
                     />
                     <div className="text-md-right mt-xs">
-                      <Button color="danger" className="mr-xs">Save</Button>
-                      <Button color="default">Clear</Button>
+                      <Button color="success" className="me-2">Save</Button>
+                      <Button color="gray-default">Clear</Button>
                     </div>
                   </Col>
                 </FormGroup>
@@ -642,7 +602,7 @@ class Elements extends React.Component {
 
           <Col lg="6" md={12}>
             <Widget
-              title={<h6><i className="fa fa-list-alt" /> Selects </h6>} refresh close
+              title={<h6>Selects</h6>} refresh close
               settings
             >
               <Form className="form-label-left">
@@ -650,17 +610,19 @@ class Elements extends React.Component {
                 <FormGroup row>
                   <Label md="4" for="default-select">Default select</Label>
                   <Col md="6" className={s.select2}>
-                    <Select2
-                      value={this.state.defaultSelectVal}
-                      data={this.state.selectDefaultData}
+                    <Select 
+                      className="selectCustomization"
+                      options={this.state.selectDefaultData}
+                      defaultValue={this.state.selectDefaultData[1]}
                     />
                   </Col>
                 </FormGroup>
                 <FormGroup row>
                   <Label md="4" for="grouped-select">Select with search & groups</Label>
                   <Col md="6" className={s.select2}>
-                    <Select2
-                      data={this.state.selectGroupData}
+                    <Select 
+                      className="selectCustomization"
+                      options={this.state.selectGroupData}
                     />
                   </Col>
                 </FormGroup>
@@ -673,8 +635,8 @@ class Elements extends React.Component {
                   <Col md="8">
                     <UncontrolledButtonDropdown>
                       <DropdownToggle
-                        caret color="default"
-                        className="dropdown-toggle-split mr-xs"
+                        caret color="gray-default"
+                        className="dropdown-toggle-split me-2"
                       >
                         {this.state.simpleSelectDropdownValue}
                       </DropdownToggle>
@@ -703,7 +665,7 @@ class Elements extends React.Component {
                     <UncontrolledButtonDropdown>
                       <DropdownToggle
                         caret color="danger"
-                        className="dropdown-toggle-split mr-xs"
+                        className="dropdown-toggle-split me-2"
                       >
                         {this.state.redSelectDropdownValue}
                       </DropdownToggle>
@@ -722,7 +684,7 @@ class Elements extends React.Component {
                     <UncontrolledButtonDropdown>
                       <DropdownToggle
                         caret color="warning"
-                        className="dropdown-toggle-split mr-xs"
+                        className="dropdown-toggle-split me-2"
                       >
                         {this.state.orangeSelectDropdownValue}
                       </DropdownToggle>
@@ -774,10 +736,10 @@ class Elements extends React.Component {
                   <Col md="8">
                     <UncontrolledButtonDropdown id="simple-big-select">
                       <DropdownToggle
-                        caret color="default" size="lg"
+                        caret color="gray-default" size="lg"
                         className="dropdown-toggle-split"
                       >
-                        <span className="mr-5"> {this.state.bigSelectDropdownValue}</span>
+                        <span className="me-5"> {this.state.bigSelectDropdownValue}</span>
                       </DropdownToggle>
                       <DropdownMenu>
                         <DropdownItem onClick={this.changeSelectDropdownBig}>
@@ -802,7 +764,7 @@ class Elements extends React.Component {
         <Row>
           <Col md="12">
             <Widget
-              title={<h6> Checkbox <strong>Controls</strong></h6>} settingsInverse refresh
+              title={<h6> Checkbox <strong>Controls</strong></h6>} settings refresh
               close
             >
               <Row>
@@ -927,7 +889,7 @@ class Elements extends React.Component {
 
         <Row>
           <Col md="12">
-            <Widget title={<h6> Radio <strong>Controls</strong></h6>} close refresh settingsInverse>
+            <Widget title={<h6> Radio <strong>Controls</strong></h6>} close refresh settings>
               <Form>
                 <Row>
                   <Col lg="4">
@@ -1001,7 +963,7 @@ class Elements extends React.Component {
                         /><i />
                       </Label>
                     </FormGroup>
-                    <FormGroup className="display-inline-block checkbox-ios ml">
+                    <FormGroup className="display-inline-block checkbox-ios ms-1">
                       <Label for="checkbox-ios2" className="switch">
                         <Input type="checkbox" className="ios" id="checkbox-ios2" /><i />
                       </Label>
@@ -1016,7 +978,7 @@ class Elements extends React.Component {
         <Row>
 
           <Col lg="6" md="12">
-            <Widget title={<h6>Pickers</h6>} close refresh settingsInverse>
+            <Widget title={<h6>Pickers</h6>} close refresh settings>
               <Form>
                 <legend>Date & Time</legend>
                 <FormGroup>
@@ -1030,9 +992,9 @@ class Elements extends React.Component {
                           viewMode="days" timeFormat={false}
                           inputProps={{ ref: (input) => { this.refDatePicker = input; } }}
                         />
-                        <InputGroupAddon addonType="append" onClick={() => { this.refDatePicker.focus(); }}>
-                          <span className="input-group-text"><i className="glyphicon glyphicon-th" /></span>
-                        </InputGroupAddon>
+                        <span className="input-group-text" onClick={() => { this.refDatePicker.focus(); }}>
+                          <i className="glyphicon glyphicon-th" />
+                        </span>
                       </div>
                     </Col>
                     <Col xs="6">
@@ -1042,9 +1004,7 @@ class Elements extends React.Component {
                           inputProps={{ ref: (input) => { this.refTimePicker = input; } }}
                           viewMode="time" dateFormat={false}
                         />
-                        <InputGroupAddon addonType="append" onClick={() => { this.refTimePicker.focus(); }}>
-                          <span className="input-group-text"><i className="glyphicon glyphicon-time" /></span>
-                        </InputGroupAddon>
+                          <span className="input-group-text" onClick={() => { this.refTimePicker.focus()}} ><i className="glyphicon glyphicon-time" /></span>
                       </div>
                     </Col>
                   </Row>
@@ -1064,13 +1024,11 @@ class Elements extends React.Component {
                         type="text" onChange={this.changeColorInput} id="colorpickeri"
                         value={this.state.colorpickerInputValue}
                       />
-                      <InputGroupAddon addonType="append">
                         <span className="input-group-text"><ColorPicker
                           animation="slide-up"
                           color={this.state.colorpickerValue}
                           onChange={this.changeColorValue}
                         /></span>
-                      </InputGroupAddon>
                     </InputGroup>
                   </Label>
                 </FormGroup>
@@ -1080,7 +1038,7 @@ class Elements extends React.Component {
 
 
           <Col lg="6" md="12">
-            <Widget title={<h6> Input <strong>Masks</strong></h6>} close settingsInverse refresh>
+            <Widget title={<h6> Input <strong>Masks</strong></h6>} close settings refresh>
               <Form className="form-label-left">
                 <legend>Masked inputs</legend>
                 <FormGroup row>
@@ -1134,111 +1092,104 @@ class Elements extends React.Component {
 
         <Row>
           <Col xs="12">
-            <Widget title={<h6>Sliders</h6>} settingsInverse close refresh>
+            <Widget title={<h6>Sliders</h6>} settings close refresh>
               <Row>
                 <Col lg="4">
                   <h4>Color Options</h4>
-                  <p>Sing extends Bootstrap Slider and provides different color options:</p>
+                  <p>Sing extends <strong>rc-slider</strong> and provides different color options:</p>
                   <Form>
-                    <div className="mb-sm">
-                      <ReactBootstrapSlider
-                        value={14}
-                        step={1}
-                        min={0}
-                        max={20}
-                      />
-                    </div>
-                    <div className="slider-danger mb-sm">
-                      <ReactBootstrapSlider
-                        value={18}
-                        step={1}
-                        min={0}
-                        max={20}
-                      />
-                    </div>
-                    <div className="slider-warning mb-sm">
-                      <ReactBootstrapSlider
-                        value={7}
-                        step={1}
-                        min={0}
-                        max={20}
-                      />
-                    </div>
-                    <div className="slider-success mb-sm">
-                      <ReactBootstrapSlider
-                        value={11}
-                        step={1}
-                        min={0}
-                        max={20}
-                      />
-                    </div>
-                    <div className="slider-inverse mb-sm">
-                      <ReactBootstrapSlider
-                        value={4}
-                        step={1}
-                        min={0}
-                        max={20}
-                      />
-                    </div>
+                    <Row>
+                      <Col lg={10} md={8}>
+                        <div className="mb-sm">
+                          <SliderWithTooltip  
+                            tipFormatter={this.valueFormatter}
+                            className={`${s.sliderCustomization} ${s.horizontalSlider} ${s.sliderBlue}`}
+                            defaultValue={20}
+                          />
+                        </div>
+                        <div className="slider-danger mb-sm">
+                          <SliderWithTooltip  
+                            tipFormatter={this.valueFormatter}
+                            className={`${s.sliderCustomization} ${s.horizontalSlider} ${s.sliderRed}`}
+                            defaultValue={60}
+                          />
+                        </div>
+                        <div className="slider-warning mb-sm">
+                          <SliderWithTooltip  
+                            tipFormatter={this.valueFormatter}
+                            className={`${s.sliderCustomization} ${s.horizontalSlider} ${s.sliderYellow}`}
+                            defaultValue={80}
+                          />
+                        </div>
+                        <div className="slider-success mb-sm">
+                          <SliderWithTooltip  
+                            tipFormatter={this.valueFormatter}
+                            className={`${s.sliderCustomization} ${s.horizontalSlider} ${s.sliderGreen}`}
+                            defaultValue={20}
+                          />
+                        </div>
+                        <div className="slider-inverse mb-sm">
+                          <SliderWithTooltip  
+                            tipFormatter={this.valueFormatter}
+                            className={`${s.sliderCustomization} ${s.horizontalSlider} ${s.sliderGrey}`} 
+                            defaultValue={40}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
                   </Form>
                 </Col>
 
-                <Col lg="4">
+                <Col lg={4}>
                   <h4>Slider Orientation</h4>
                   <p>
-                    Vertical orientation is also possible. Simply changing <strong>
-                    data-slider-orientation </strong>
-                    attribute does the thing.
+                    Vertical orientation is also possible. Simply by adding <strong>
+                    verical prop</strong>.
                   </p>
                   <Row>
-                    <Col md="8">
-                      <span className="">
-                        <ReactBootstrapSlider
-                          value={14}
-                          step={1}
-                          min={0}
-                          max={20}
-                          orientation="vertical"
+                    <Col lg={10}>
+                      <span>
+                        <SliderWithTooltip  
+                          tipFormatter={this.valueFormatter} 
+                          className={`${s.sliderCustomization} ${s.verticalSlider} ${s.sliderBlue}`}
+                          vertical
+                          defaultValue={50}
                         />
                       </span>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <span className="slider-inverse">
-                        <ReactBootstrapSlider
-                          value={18}
-                          step={1}
-                          min={0}
-                          max={20}
-                          orientation="vertical"
+                      <span>
+                        <SliderWithTooltip  
+                          tipFormatter={this.valueFormatter} 
+                          className={`${s.sliderCustomization} ${s.verticalSlider} ${s.sliderBlue}`}
+                          vertical
+                          defaultValue={70}
                         />
                       </span>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <span className="">
-                        <ReactBootstrapSlider
-                          value={7}
-                          step={1}
-                          min={0}
-                          max={20}
-                          orientation="vertical"
+                      <span>
+                        <SliderWithTooltip  
+                          tipFormatter={this.valueFormatter} 
+                          className={`${s.sliderCustomization} ${s.verticalSlider} ${s.sliderBlue}`}
+                          vertical
+                          defaultValue={20}
                         />
                       </span>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <span className="slider-inverse">
-                        <ReactBootstrapSlider
-                          value={11}
-                          step={1}
-                          min={0}
-                          max={20}
-                          orientation="vertical"
+                      <span>
+                        <SliderWithTooltip  
+                          tipFormatter={this.valueFormatter} 
+                          className={`${s.sliderCustomization} ${s.verticalSlider} ${s.sliderBlue}`}
+                          vertical
+                          defaultValue={30}
                         />
                       </span>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <span className="">
-                        <ReactBootstrapSlider
-                          value={4}
-                          step={1}
-                          min={0}
-                          max={20}
-                          orientation="vertical"
+                      <span>
+                        <SliderWithTooltip  
+                          tipFormatter={this.valueFormatter} 
+                          className={`${s.sliderCustomization} ${s.verticalSlider} ${s.sliderBlue}`}
+                          vertical
+                          defaultValue={40}
                         />
                       </span>
                     </Col>
@@ -1247,18 +1198,19 @@ class Elements extends React.Component {
 
                 <Col lg="4">
                   <h4>Range Selector</h4>
-                  <p>Range selector, options specified via <strong>data-slider-value</strong>
-                    attribute as
-                    an array. Price range selector:</p>
-                  <span className="slider-warning">
-                    <ReactBootstrapSlider
-                      step={1}
-                      min={0}
-                      max={2000}
-                      value={[200, 1547]} range
-                    />
-                    &nbsp;
-                  </span>
+                  <p>Range selector can be displayed via <strong>{"<RangeTooltip />"} </strong>tag. Price range selector:</p>
+                  <Row>
+                    <Col md={10}>
+                      <span className="slider-warning">
+                        <RangeTooltip 
+                          allowCross={false}
+                          className={`${s.sliderCustomization} ${s.rangeSlider} ${s.sliderRed}`}
+                          defaultValue={[20, 70]} 
+                        />
+                        &nbsp;
+                      </span>                    
+                    </Col>
+                  </Row>
                 </Col>
 
               </Row>
@@ -1271,7 +1223,7 @@ class Elements extends React.Component {
 
           <Col lg="6" md={12}>
             <Widget
-              title={<h6>Simple <strong>file uploads</strong></h6>} settingsInverse close
+              title={<h6>Simple <strong>file uploads</strong></h6>} settings close
               refresh
             >
               <Form>
@@ -1299,21 +1251,20 @@ class Elements extends React.Component {
                           ))}
                         </div> : <span />}
                       </Label>
-                      {this.state.inputFiles.length === 0 ? <InputGroupAddon addonType="append">
-                        <Button type="button" color="default" className="btn-file">
+                      {this.state.inputFiles.length === 0 ? <Button type="button" color="gray-default" className="btn-file">
                           <Label for="fileupload1">Select file</Label>
-                        </Button>
-                      </InputGroupAddon> : <InputGroupAddon addonType="append">
-                        <Button type="button" color="default">
-                          <Label for="fileupload1">Change file</Label>
-                        </Button>
-                        <Button
-                          type="reset" color="default"
-                          onClick={this.removeInputFiles}
-                        >
-                          <Label>Remove file</Label>
-                        </Button>
-                      </InputGroupAddon>}
+                        </Button> : <div>
+                          <Button type="button" color="gray-default">
+                            <Label for="fileupload1">Change file</Label>
+                          </Button>
+                          <Button
+                            type="reset" color="gray-default"
+                            onClick={this.removeInputFiles}
+                          >
+                            <Label>Remove file</Label>
+                          </Button>
+                        </div>
+                        }
 
                     </InputGroup>
                     <span className="help-block">Awesome file input plugin allows you to create a visually appealing
@@ -1343,7 +1294,7 @@ class Elements extends React.Component {
                       </div>
                     </div>
                     <div>
-                      <Button type="button" color="default"><Label for="fileupload2">Select
+                      <Button type="button" color="gray-default"><Label for="fileupload2">Select
                         image</Label></Button>
                     </div>
                     <span className="help-block">Showing a thumbnail instead of the filename when uploading an image.</span>
@@ -1355,7 +1306,7 @@ class Elements extends React.Component {
 
 
           <Col lg="6" md={12}>
-            <Widget title={<h6><strong>Drop</strong> Zone</h6>} settingsInverse refresh close>
+            <Widget title={<h6><strong>Drop</strong> Zone</h6>} settings refresh close>
               <div>
                 <Dropzone
                   onDrop={this.onDrop} accept="image/*"
@@ -1363,7 +1314,7 @@ class Elements extends React.Component {
                 >
                   {this.state.dropFiles.length > 0 ? <div>
                     {this.state.dropFiles.map((file, idx) => (
-                      <div className="display-inline-block mr-xs mb-xs" key={`drop-id-${idx.toString()}`}>
+                      <div className="display-inline-block me-2 mb-xs" key={`drop-id-${idx.toString()}`}>
                         <img alt="..." src={file.preview} width={100} />
                         <div>{file.name}</div>
                       </div>

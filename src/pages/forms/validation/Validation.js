@@ -10,6 +10,7 @@ import Formsy from 'formsy-react';
 
 import InputValidation from '../../../components/InputValidation';
 import Widget from '../../../components/Widget';
+import Formik from './Formik';
 
 
 class Validation extends React.Component {
@@ -17,16 +18,11 @@ class Validation extends React.Component {
   render() {
     return (
       <div>
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">YOU ARE HERE</li>
-          <li className="breadcrumb-item active">Form Validation</li>
-        </ol>
         <h1 className="page-title">Form - <span className="fw-semi-bold">Validation</span>
         </h1>
 
         <Row>
-          <Col xs={0} lg={1} />
-          <Col lg={8} xs={12}>
+          <Col lg={6} xs={12}>
             <Widget
               title={<h5> Dead simple validation
               <small> No JS needed to tune-up</small>
@@ -68,7 +64,7 @@ class Validation extends React.Component {
                 </fieldset>
                 <fieldset>
                   <legend>
-                    <span className="badge badge-warning text-gray-dark mr-xs">
+                    <span className="badge bg-warning text-gray-dark me-2">
                       HTML5 </span> input types supported
                   </legend>
                   <FormGroup row>
@@ -172,11 +168,16 @@ class Validation extends React.Component {
                   </FormGroup>
                 </fieldset>
 
-                <div className="form-action">
-                  <Button type="submit" color="danger" className="btn-rounded float-right">Validate & Submit</Button>
-                  <Button type="button" color="default" className="btn-rounded">Cancel</Button>
+                <div>
+                  <Button type="submit" color="success" className="btn-rounded float-end ms-2">Validate & Submit</Button>
+                  <Button type="button" color="gray-default" className="btn-rounded float-end">Cancel</Button>
                 </div>
               </Formsy.Form>
+            </Widget>
+          </Col>
+          <Col lg={6} xs={12}>
+            <Widget title={<h5> Dead simple formik</h5>} close collapse>
+              <Formik />
             </Widget>
           </Col>
         </Row>

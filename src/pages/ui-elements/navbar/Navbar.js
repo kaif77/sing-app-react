@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import {
   Row,
   Col,
-  Breadcrumb,
-  BreadcrumbItem,
   Navbar,
   NavbarBrand,
   NavbarToggler,
@@ -32,18 +30,14 @@ class NavbarExamples extends Component {
   render() {
     return (
       <div>
-        <Breadcrumb>
-          <BreadcrumbItem>YOU ARE HERE</BreadcrumbItem>
-          <BreadcrumbItem active>UI Navbar</BreadcrumbItem>
-        </Breadcrumb>
         <Row>
-          <Col xs={12} md={9}>
+          <Col xs={12}>
             <Widget
               title={<h5>Navbar <span className="fw-semi-bold">Example</span></h5>}
               close collapse
             >
               <p>Here’s what you need to know before getting started with the navbar:</p>
-              <ui>
+              <ul>
                 <li>Navbars require a wrapping <code>&lt;Navbar&gt;</code> with <code>expand=&quot;*&quot;</code> for
                     responsive collapsing and color scheme classes.</li>
                 <li>Navbars and their contents are fluid by default. Use optional containers
@@ -53,12 +47,12 @@ class NavbarExamples extends Component {
                   behavior depends on our Collapse JavaScript plugin.</li>
                 <li>Navbars are hidden by default when printing. Force them to be printed by adding <code>.d-print</code>
                 to the <code>.navbar</code>. See the display utility class.</li>
-              </ui>
-              <Navbar className="px-2 mt-lg" color="light" light expand="md">
+              </ul>
+              <Navbar className="px-4 mt-lg" color="light" light expand="md">
                 <NavbarBrand href="/">Navbar</NavbarBrand>
-                <NavbarToggler className="ml-auto" onClick={() => this.toggle(0)} />
+                <NavbarToggler className="ms-auto" onClick={() => this.toggle(0)} />
                 <Collapse isOpen={this.state.navs[0]} navbar>
-                  <Nav className="ml-auto" navbar>
+                  <Nav className="ms-auto" navbar>
                     <NavItem>
                       <NavLink>Home</NavLink>
                     </NavItem>
@@ -76,7 +70,7 @@ class NavbarExamples extends Component {
               </Navbar>
             </Widget>
           </Col>
-          <Col xs={12} md={9}>
+          <Col xs={12}>
             <Widget
               title={<h5>Navbar <span className="fw-semi-bold">Example</span></h5>}
               close collapse
@@ -85,11 +79,11 @@ class NavbarExamples extends Component {
                 theming classes and background-color utilities. Choose from <code>color=&quot;light&quot;</code>
                 for use with light background colors, or <code>color=&quot;dark&quot;</code> for dark background
                 colors. Then, customize with <code>.bg-*</code> utilities.</p>
-              <Navbar className="px-2 mt-lg" color="dark" dark expand="md">
+              <Navbar className="px-4 mt-lg" color="inverse" dark expand="md">
                 <NavbarBrand href="/">Navbar</NavbarBrand>
-                <NavbarToggler className="ml-auto" onClick={() => this.toggle(1)} />
+                <NavbarToggler className="ms-auto" onClick={() => this.toggle(1)} />
                 <Collapse isOpen={this.state.navs[1]} navbar>
-                  <Nav className="ml-auto" navbar>
+                  <Nav className="ms-auto" navbar>
                     <NavItem>
                       <NavLink>Home</NavLink>
                     </NavItem>
@@ -105,11 +99,11 @@ class NavbarExamples extends Component {
                   </Nav>
                 </Collapse>
               </Navbar>
-              <Navbar className="px-2 mt-lg" color="primary" dark expand="md">
+              <Navbar className="px-4 mt-lg" color="primary" dark expand="md">
                 <NavbarBrand href="/">Navbar</NavbarBrand>
-                <NavbarToggler className="ml-auto" onClick={() => this.toggle(2)} />
+                <NavbarToggler className="ms-auto" onClick={() => this.toggle(2)} />
                 <Collapse isOpen={this.state.navs[2]} navbar>
-                  <Nav className="ml-auto" navbar>
+                  <Nav className="ms-auto" navbar>
                     <NavItem>
                       <NavLink>Home</NavLink>
                     </NavItem>
@@ -125,11 +119,11 @@ class NavbarExamples extends Component {
                   </Nav>
                 </Collapse>
               </Navbar>
-              <Navbar className="px-2 mt-lg" color="light" light expand="md">
+              <Navbar className="px-4 mt-lg" color="light" light expand="md">
                 <NavbarBrand href="/">Navbar</NavbarBrand>
-                <NavbarToggler className="ml-auto" onClick={() => this.toggle(3)} />
+                <NavbarToggler className="ms-auto" onClick={() => this.toggle(3)} />
                 <Collapse isOpen={this.state.navs[3]} navbar>
-                  <Nav className="ml-auto" navbar>
+                  <Nav className="ms-auto" navbar>
                     <NavItem>
                       <NavLink>Home</NavLink>
                     </NavItem>
